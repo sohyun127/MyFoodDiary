@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.myfooddiary.Home.MainActivity;
 import com.example.myfooddiary.databinding.ActivitySigninBinding;
 import com.google.android.material.snackbar.Snackbar;
 

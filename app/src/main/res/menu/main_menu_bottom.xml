@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_ingredient"
+        android:icon="@drawable/ic_ingredient"
+        android:title="재료"/>
+    <item
+        android:id="@+id/menu_recipe"
+        android:icon="@drawable/ic_recipe"
+        android:title="레시피"/>
+    <item
+        android:id="@+id/menu_record"
+        android:icon="@drawable/ic_record"
+        android:title="기록"/>
+</menu>
