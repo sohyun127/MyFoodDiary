@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MyFoodDiary</string>
+    <string name="signin_title">My Food Diary</string>
+    <string name="signin_signup">회원가입</string>
 </resources>
