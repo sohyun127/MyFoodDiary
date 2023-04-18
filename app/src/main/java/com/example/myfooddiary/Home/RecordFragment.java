@@ -18,8 +18,9 @@ public class RecordFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-
+        binding = FragmentRecordBinding.inflate(inflater,container,false);
+        View view = binding.getRoot();
+        return view;
     }
 
     @Override
@@ -30,7 +31,6 @@ public class RecordFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-
         binding=null;
     }
 
