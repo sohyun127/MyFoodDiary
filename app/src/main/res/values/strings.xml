@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MyFoodDiary</string>
+    <string name="signin_title">My Food Diary</string>
+    <string name="signin_signup">회원가입</string>
+    <string name="signup_id">ID</string>
+    <string name="signup_pw">PW</string>
+    <string name="signup_nickname">닉네임</string>
+    <string name="signup_gender">성별</string>
+    <string name="signup_birth">생년월일</string>
+    <string name="signup_height">신장</string>
+    <string name="signup_weight">체중</string>
 </resources>
