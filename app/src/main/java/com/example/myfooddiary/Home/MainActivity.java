@@ -3,13 +3,13 @@ package com.example.myfooddiary.Home;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 
 
+import com.example.myfooddiary.Home.Ingredient.IngredientFragment;
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

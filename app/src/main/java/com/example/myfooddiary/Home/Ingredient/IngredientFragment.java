@@ -1,4 +1,4 @@
-package com.example.myfooddiary.Home;
+package com.example.myfooddiary.Home.Ingredient;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
