@@ -13,9 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bnv_main"
-        android:name="com.example.myfooddiary.Home.Ingredient.IngredientFragment"
-        tools:layout="@layout/fragment_ingredient" />
+        app:layout_constraintBottom_toTopOf="@id/bnv_main" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnv_main"
