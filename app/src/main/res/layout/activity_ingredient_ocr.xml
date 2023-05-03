@@ -6,4 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Home.Ingredient.IngredientOcrActivity">
 
+
+    <SurfaceView
+        android:id="@+id/sv_ingredient_ocr"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/tv_ingredient_ocr"
+        android:text="No Text"
+        android:textColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
