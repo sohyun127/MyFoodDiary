@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyFoodDiary"
         tools:targetApi="31">
         <activity
+            android:name=".Home.Ingredient.IngredientOcrActivity"
+            android:exported="false" />
+        <activity
             android:name=".Home.MainActivity"
             android:exported="false" />
         <activity
@@ -30,8 +33,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES"
-            android:value="ocr"/>
+
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPENDENCIES"
+            android:value="ocr" />
     </application>
 
 </manifest>
