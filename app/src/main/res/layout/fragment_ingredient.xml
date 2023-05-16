@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -15,15 +16,53 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_ingredient_ocr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:contentDescription="ocr"
+        android:src="@drawable/ic_receipt"
+        android:visibility="visible"
+        app:backgroundTint="#FFF7B8"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="@id/fab_ingredient_main"
+        app:layout_constraintEnd_toEndOf="@id/fab_ingredient_main"
+        app:layout_constraintStart_toStartOf="@id/fab_ingredient_main"
+        app:layout_constraintTop_toTopOf="@id/fab_ingredient_main"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_ingredient_add_directly"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="add"
+        android:src="@drawable/ic_add_directly"
+        android:visibility="visible"
+        app:backgroundTint="#FFF7B8"
+        app:fabSize="mini"
+        app:layout_constraintBottom_toBottomOf="@id/fab_ingredient_main"
+        app:layout_constraintEnd_toEndOf="@id/fab_ingredient_main"
+        app:layout_constraintStart_toStartOf="@id/fab_ingredient_main"
+        app:layout_constraintTop_toTopOf="@id/fab_ingredient_main"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_ingredient_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="450dp"
+        android:clickable="true"
+        android:contentDescription="addFab"
+        android:focusable="true"
+        android:src="@drawable/ic_add"
+        android:visibility="visible"
+        app:backgroundTint="#FFF7B8"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_ingredient_check" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
