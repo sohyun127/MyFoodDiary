@@ -65,9 +65,9 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
                 break;
             case R.id.fab_ingredient_ocr:
                 Toast.makeText(requireContext(), "ocr", Toast.LENGTH_SHORT).show();
-                break;
-            //Intent it = new Intent(getActivity(), IngredientOcrActivity.class);
-            // startActivity(it);
+                Intent it = new Intent(getActivity(), IngredientOcrCameraActivity.class);
+                startActivity(it);
+             
 
         }
 
