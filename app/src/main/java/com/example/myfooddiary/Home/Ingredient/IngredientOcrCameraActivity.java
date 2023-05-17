@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myfooddiary.BuildConfig;
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.ActivityIngredientOcrCameraBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -53,7 +54,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
     private TextView ocrDetails;
     private static final String TAG = "OCR";
 
-    private static final String CLOUD_VISION_API_KEY = "AIzaSyA2eYkMUJvAc9KklK1fCAw6CfbVOfJ9TU8";
+    private static final String CLOUD_VISION_API_KEY = BuildConfig.API_KEY;
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
     private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
     private static final int MAX_LABEL_RESULTS = 10;
