@@ -74,10 +74,6 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
     }
 
 
-    static final int PERMISSIONS_REQUEST_CODE=1000;
-
-
-
     private void toggleFab() {
         if (fabMain_status) {
             ObjectAnimator fc_animation = ObjectAnimator.ofFloat(binding.fabIngredientAddDirectly, "translationY", 0f);
