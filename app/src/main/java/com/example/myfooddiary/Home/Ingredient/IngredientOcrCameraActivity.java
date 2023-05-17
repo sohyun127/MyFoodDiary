@@ -165,6 +165,8 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
             message = "nothing";
         }
 
+       message = message.replaceAll("[^\uAC00-\uD7A3]","");
+
         return message;
     }
 

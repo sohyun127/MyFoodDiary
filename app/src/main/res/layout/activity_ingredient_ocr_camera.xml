@@ -37,8 +37,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="TextView"
-                android:textAlignment="center" />
+                android:text="텍스트 인식 영역"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
