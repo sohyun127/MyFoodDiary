@@ -2,12 +2,19 @@ package com.example.myfooddiary.Home.Ingredient;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.util.SparseIntArray;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +25,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myfooddiary.BuildConfig;
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.ActivityIngredientOcrCameraBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -53,10 +61,26 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
     private TextView ocrDetails;
     private static final String TAG = "OCR";
 
-    private static final String CLOUD_VISION_API_KEY = "AIzaSyA2eYkMUJvAc9KklK1fCAw6CfbVOfJ9TU8";
+    private static final String CLOUD_VISION_API_KEY = BuildConfig.API_KEY;
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
     private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
     private static final int MAX_LABEL_RESULTS = 10;
+
+    private SurfaceView mSurfaceView;
+    private SurfaceHolder mSurfaceViewHolder;
+    private Sensor mAccelerometer;
+    private Sensor mMagnetometer;
+    private SensorManager mSensorManager;
+
+
+    private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
+    static {
+        ORIENTATIONS.append(ExifInterface.ORIENTATION_NORMAL,0);
+        ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_90,90);
+        ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_180,180);
+        ORIENTATIONS.append(ExifInterface.ORIENTATION_ROTATE_270,270);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +88,31 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
         binding = ActivityIngredientOcrCameraBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         img = binding.ivOcrImg;
         ocrDetails = binding.tvOcr;
 
-        FloatingActionButton fab = binding.fabOcr;
-        fab.setOnClickListener(new FloatingActionButton.OnClickListener() {
+        FloatingActionButton fabGallery = binding.fabOcrGallery;
+        FloatingActionButton fabCamera = binding.fabOcrCamera;
+
+        fabCamera.setOnClickListener(new FloatingActionButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            }
+        });
+
+
+       // mSurfaceView = binding.svCamera;
+        mSensorManager =(SensorManager) getSystemService(SENSOR_SERVICE);
+        mAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+
+
+
+
+        fabGallery.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK);
