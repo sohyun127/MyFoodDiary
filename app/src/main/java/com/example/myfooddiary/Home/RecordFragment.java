@@ -4,17 +4,28 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.FragmentRecordBinding;
+
+import android.widget.CalendarView;
+import android.widget.TextView;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class RecordFragment extends Fragment {
 
-    private FragmentRecordBinding binding;
+    CalendarView calendarView;
+    TextView today;
 
+    private FragmentRecordBinding binding;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -33,6 +44,29 @@ public class RecordFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding=null;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        today=calendarView.findViewById(R.id.today);
+        calendarView=calendarView.findViewById(R.id.calendarView);
+
+        DateFormat formatter = new SimpleDateFormat("yyyy년MM월dd일");
+        Date date=new Date(calendarView.getDate());
+        today.setText(formatter.format(date));
+
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth){
+                String day;
+                day=year+"년"+(month+1)+"월"+dayOfMonth+"일";
+                today.setText(day);
+            }
+
+        });
+
     }
 
 }
