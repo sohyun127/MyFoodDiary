@@ -21,6 +21,7 @@ public class RecordFragment extends Fragment {
         binding = FragmentRecordBinding.inflate(inflater,container,false);
         View view = binding.getRoot();
         return view;
+
     }
 
     @Override
