@@ -25,6 +25,7 @@ public class RecordFragment extends Fragment {
     CalendarView calendarView;
     TextView today;
 
+
     private FragmentRecordBinding binding;
 
     @Override
@@ -38,21 +39,9 @@ public class RecordFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding=null;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
-        today=calendarView.findViewById(R.id.today);
-        calendarView=calendarView.findViewById(R.id.calendarView);
-
+        today=binding.today;
+        calendarView=binding.calendarView;
         DateFormat formatter = new SimpleDateFormat("yyyy년MM월dd일");
         Date date=new Date(calendarView.getDate());
         today.setText(formatter.format(date));
@@ -66,7 +55,13 @@ public class RecordFragment extends Fragment {
             }
 
         });
-
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding=null;
+    }
+
 
 }
