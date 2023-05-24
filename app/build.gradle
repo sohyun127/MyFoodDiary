@@ -36,7 +36,13 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+
 }
+
+
+
+
 
 dependencies {
 
@@ -56,5 +62,9 @@ dependencies {
     implementation 'com.google.http-client:google-http-client-gson:1.23.0' exclude module: 'httpclient'
     implementation 'com.google.apis:google-api-services-vision:v1-rev369-1.23.0'
     implementation 'com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava'
+
+    //형태소 분석
+    implementation files('libs/kkma-2.1.jar')
+
 
 }
