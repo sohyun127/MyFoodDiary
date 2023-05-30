@@ -2,39 +2,23 @@ package com.example.myfooddiary.Home.Ingredient;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Camera;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfooddiary.BuildConfig;
-import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.ActivityIngredientOcrCameraBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.HttpTransport;
@@ -50,17 +34,21 @@ import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
 
-import org.snu.ids.kkma.index.Keyword;
-import org.snu.ids.kkma.index.KeywordExtractor;
-import org.snu.ids.kkma.index.KeywordList;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class IngredientOcrCameraActivity extends AppCompatActivity {
 
 
     private ActivityIngredientOcrCameraBinding binding;
-    private ImageView img;
-    private TextView ocrDetails;
+
     private static final String TAG = "OCR";
 
     private static final String CLOUD_VISION_API_KEY = BuildConfig.API_KEY;
@@ -68,14 +56,20 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
     private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
     private static final int MAX_LABEL_RESULTS = 10;
 
+    Intent image;
+    Intent text;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityIngredientOcrCameraBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        img = binding.ivOcrImg;
-        ocrDetails = binding.tvOcr;
+
+        image = new Intent(this, IngredientOcrImageActivity.class);
+        text = new Intent(this,IngredientOcrTextActivity.class);
+
 
         FloatingActionButton fab = binding.fabOcr;
         fab.setOnClickListener(new FloatingActionButton.OnClickListener() {
@@ -85,6 +79,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 intent.setAction(Intent.ACTION_PICK);
                 activityResultLauncher.launch(intent);
+
             }
         });
 
@@ -99,16 +94,23 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
                     if (result.getResultCode() == RESULT_OK) {
                         Intent intent = result.getData();
                         Uri uri = intent.getData();
-
                         try {
                             Bitmap bm = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                            img.setImageBitmap(bm);
-                            callCloudVision(bm);
+
+                            //callCloudVision(bm);
+
+                            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                            bm.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+                            byte[] bytes = stream.toByteArray();
+                            image.putExtra("image_data", bytes);
+
+                            startActivity(image);
                         } catch (FileNotFoundException e) {
                             throw new RuntimeException(e);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
+
 
                     }
                 }
@@ -116,8 +118,6 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
     );
 
     private void callCloudVision(final Bitmap bitmap) {
-        // Switch text to loading
-        ocrDetails.setText(R.string.loading_message);
 
         // Do the real work in an async task, because we need to use the network anyway
         try {
@@ -175,55 +175,21 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
         }
 
         //message = message.replaceAll("[^\uAC00-\uD7A3]", "");
-        return extractTest(message);
 
-    }
+        String pattern = "253.*10,550";
 
-    public static String extractTest(String string){
-        List<String> noodle = Arrays.asList(new String[]{"너구리", "신라면","불닭 볶음면","라면"});
-        List<String> meat = Arrays.asList(new String[]{"목살", "우둔","한우","돼지고기","삼겹살"});
-        String result="";
+        Pattern compiledPattern = Pattern.compile(pattern);
+        Matcher matcher = compiledPattern.matcher(message);
 
-
-        KeywordExtractor ke = new KeywordExtractor();
-        KeywordList kl = ke.extractKeyword(string, true);
-        for( int i = 0; i < kl.size(); i++ ){
-            Keyword kwrd = kl.get(i);
-            if(kwrd.getString().equals("고구마")){
-                 result=result+"고구마 ";
-            }
-            if(kwrd.getString().equals("단호박")){
-                result=result+"단호박 ";
-            }
-            if(kwrd.getString().equals("사과")){
-                result=result+"사과 ";
-            }
-            if(kwrd.getString().equals("당근")){
-                result=result+"당근 ";
-            }
-            if(kwrd.getString().equals("버섯")){
-                result=result+"버섯 ";
-            }
-            if(kwrd.getString().equals("김")){
-                result=result+"김 ";
-            }
-            for(int j=0;j<noodle.size();j++){
-                if(kwrd.getString().equals(noodle.get(j))){
-                    result=result+"라면 ";
-                }
-
-            }
-            for(int j=0;j<meat.size();j++){
-                if(kwrd.getString().equals(meat.get(j))){
-                    result=result+"고기 ";
-                }
-
-            }
-
-
-            System.out.println(kwrd.getString() + "\t" + kwrd.getCnt());
+        if (matcher.find()) {
+            String extreactedText = matcher.group();
+            return extreactedText;
+        } else {
+            return "not found";
         }
-        return result;
+
+
+        //return message;
     }
 
 
@@ -293,10 +259,6 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
 
         return annotateRequest;
     }
-
-
-
-
 
 
 }
