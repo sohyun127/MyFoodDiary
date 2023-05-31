@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGESE"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO"/>
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGESE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -18,10 +18,13 @@
         android:theme="@style/Theme.MyFoodDiary"
         tools:targetApi="31">
         <activity
-            android:name=".Home.Ingredient.IngredientOcrActivity"
+            android:name=".Home.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Home.MainActivity"
+            android:name=".Home.Ingredient.IngredientOcrImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.Ingredient.IngredientOcrTextActivity"
             android:exported="false" />
         <activity
             android:name=".SignupActivity"

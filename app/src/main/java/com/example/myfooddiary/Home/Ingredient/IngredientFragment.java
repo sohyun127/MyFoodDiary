@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -67,6 +66,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
                 Toast.makeText(requireContext(), "ocr", Toast.LENGTH_SHORT).show();
                 Intent it = new Intent(getActivity(), IngredientOcrCameraActivity.class);
                 startActivity(it);
+                break;
              
 
         }
