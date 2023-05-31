@@ -16,6 +16,12 @@ public class IngredientOcrTextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityIngredientOcrTextBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        String result = getIntent().getStringExtra("text");
+
+        binding.tvIngredientOcrText.setText(result);
+
+
     }
 
 

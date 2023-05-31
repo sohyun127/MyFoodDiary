@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -57,7 +56,6 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
     private static final int MAX_LABEL_RESULTS = 10;
 
     Intent image;
-    Intent text;
 
 
     @Override
@@ -68,7 +66,6 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
 
 
         image = new Intent(this, IngredientOcrImageActivity.class);
-        text = new Intent(this,IngredientOcrTextActivity.class);
 
 
         FloatingActionButton fab = binding.fabOcr;
@@ -97,14 +94,14 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
                         try {
                             Bitmap bm = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
 
-                            //callCloudVision(bm);
+                            callCloudVision(bm);
 
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
                             bm.compress(Bitmap.CompressFormat.JPEG, 80, stream);
                             byte[] bytes = stream.toByteArray();
                             image.putExtra("image_data", bytes);
 
-                            startActivity(image);
+
                         } catch (FileNotFoundException e) {
                             throw new RuntimeException(e);
                         } catch (IOException e) {
@@ -157,8 +154,15 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             IngredientOcrCameraActivity activity = mActivityWeakReference.get();
             if (activity != null && !activity.isFinishing()) {
-                TextView imageDetail = activity.binding.tvOcr;
-                imageDetail.setText(result);
+                //TextView imageDetail = activity.binding.tvOcr;
+                //imageDetail.setText(result);
+
+                Intent intent = new Intent(activity, IngredientOcrImageActivity.class);
+                intent.putExtra("result_data", result);
+                intent.putExtra("image_data", activity.image.getByteArrayExtra("image_data"));
+                activity.startActivity(intent);
+
+
             }
         }
     }
@@ -176,7 +180,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
 
         //message = message.replaceAll("[^\uAC00-\uD7A3]", "");
 
-        String pattern = "253.*10,550";
+        String pattern = "당근";
 
         Pattern compiledPattern = Pattern.compile(pattern);
         Matcher matcher = compiledPattern.matcher(message);
@@ -199,10 +203,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
 
         VisionRequestInitializer requestInitializer =
                 new VisionRequestInitializer(CLOUD_VISION_API_KEY) {
-                    /**
-                     * We override this so we can inject important identifying fields into the HTTP
-                     * headers. This enables use of a restricted cloud platform API key.
-                     */
+
                     @Override
                     protected void initializeVisionRequest(VisionRequest<?> visionRequest)
                             throws IOException {

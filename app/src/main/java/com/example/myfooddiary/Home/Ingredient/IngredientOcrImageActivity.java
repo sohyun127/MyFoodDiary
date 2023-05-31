@@ -14,6 +14,7 @@ import com.example.myfooddiary.databinding.ActivityIngredientOcrImageBinding;
 public class IngredientOcrImageActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityIngredientOcrImageBinding binding;
+    private String ocrText;
 
 
     @Override
@@ -25,6 +26,8 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
         binding.btnIngredientOcrImageCancel.setOnClickListener(this);
         binding.btnIngredientOcrImageComplete.setOnClickListener(this);
         setImage();
+        setText();
+
 
     }
 
@@ -36,6 +39,10 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
             binding.ivIngredientOcrImage.setImageBitmap(bitmap);
         }
 
+    }
+
+    private void setText() {
+        ocrText = getIntent().getStringExtra("result_data");
     }
 
 
@@ -50,6 +57,7 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
                 break;
             case R.id.btn_ingredient_ocr_image_complete:
                 Intent intent2 = new Intent(this, IngredientOcrTextActivity.class);
+                intent2.putExtra("text", ocrText);
                 startActivity(intent2);
                 finish();
                 break;
