@@ -1,7 +1,12 @@
 package com.example.myfooddiary.Home.Ingredient;
 
+import android.Manifest;
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.myfooddiary.R;
@@ -22,6 +28,9 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
 
     // 플로팅버튼 상태
     private boolean fabMain_status = false;
+
+    private static final int PERMISSIONS_REQUEST_CODE = 1000;
+    String[] PERMISSIONS = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 
     @Override
@@ -43,6 +52,15 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
         fabMain.setOnClickListener(this);
         fabAddDirectly.setOnClickListener(this);
         fabOcr.setOnClickListener(this);
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+            if(!hasPermissions(PERMISSIONS)){
+                requestPermissions(PERMISSIONS,PERMISSIONS_REQUEST_CODE);
+            }else{
+                startActivity(new Intent(getActivity(),IngredientOcrCameraActivity.class));
+                getActivity().finish();
+            }
+        }
 
     }
 
@@ -67,7 +85,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
                 Intent it = new Intent(getActivity(), IngredientOcrCameraActivity.class);
                 startActivity(it);
                 break;
-             
+
 
         }
 
@@ -94,6 +112,61 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
         }
         // 플로팅 버튼 상태 변경
         fabMain_status = !fabMain_status;
+    }
+
+    private boolean hasPermissions(String[] permissions) {
+        int result;
+
+        for (String perms : permissions) {
+            result = ContextCompat.checkSelfPermission(requireContext(), perms);
+
+            if (result == PackageManager.PERMISSION_DENIED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        switch (requestCode) {
+            case PERMISSIONS_REQUEST_CODE:
+                if (grantResults.length > 0) {
+                    boolean cameraPermissionAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean diskPermissionsAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                    if (!cameraPermissionAccepted || diskPermissionsAccepted)
+                        showDialogForPermission("앱을 실행하려면 퍼미션을 허가하셔야합니다");
+                    else {
+                        startActivity(new Intent(getActivity(), IngredientOcrCameraActivity.class));
+                        getActivity().finish();
+                    }
+                }
+                break;
+
+        }
+
+    }
+
+    private void showDialogForPermission(String msg) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("알림");
+        builder.setMessage(msg);
+        builder.setCancelable(false);
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                requestPermissions(PERMISSIONS, PERMISSIONS_REQUEST_CODE);
+            }
+        });
+        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                getActivity().finish();
+            }
+        });
+        builder.create().show();
     }
 
 
