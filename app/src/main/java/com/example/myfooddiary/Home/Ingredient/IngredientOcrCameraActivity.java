@@ -192,15 +192,15 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
 
             @Override
             public void surfaceChanged(@NonNull SurfaceHolder holder, int format, int width, int height) {
-                if (mCameraDevice != null) {
-                    mCameraDevice.close();
-                    mCameraDevice = null;
-                }
+
             }
 
             @Override
             public void surfaceDestroyed(@NonNull SurfaceHolder holder) {
-
+                if (mCameraDevice != null) {
+                    mCameraDevice.close();
+                    mCameraDevice = null;
+                }
             }
         });
 
@@ -322,11 +322,10 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
 
     public void takePicture() {
         try {
-
             CaptureRequest.Builder captureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
             captureRequestBuilder.addTarget(mImageReader.getSurface());
             captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-            captureRequestBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
+            captureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
 
             mDeviceRotation = ORIENTATIONS.get(deviceOrientation.getOrientation());
             CaptureRequest mCaptureRequest = captureRequestBuilder.build();
