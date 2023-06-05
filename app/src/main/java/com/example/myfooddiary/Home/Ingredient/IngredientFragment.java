@@ -53,6 +53,8 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
         fabAddDirectly.setOnClickListener(this);
         fabOcr.setOnClickListener(this);
 
+        setTabLayout();
+
     }
 
     @Override
@@ -61,6 +63,13 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
         binding = null;
     }
 
+
+    private void setTabLayout(){
+        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("첫번째"));
+        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("첫번째"));
+        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("첫번째"));
+        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("첫번째"));
+    }
     @Override
     public void onClick(View v) {
 
