@@ -50,35 +50,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.myfooddiary.BuildConfig;
 import com.example.myfooddiary.databinding.ActivityIngredientOcrCameraBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.gson.GsonFactory;
-import com.google.api.services.vision.v1.Vision;
-import com.google.api.services.vision.v1.VisionRequest;
-import com.google.api.services.vision.v1.VisionRequestInitializer;
-import com.google.api.services.vision.v1.model.AnnotateImageRequest;
-import com.google.api.services.vision.v1.model.BatchAnnotateImagesRequest;
-import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
-import com.google.api.services.vision.v1.model.EntityAnnotation;
-import com.google.api.services.vision.v1.model.Feature;
-import com.google.api.services.vision.v1.model.Image;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.ref.WeakReference;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 public class IngredientOcrCameraActivity extends AppCompatActivity {
@@ -86,14 +66,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
 
     private ActivityIngredientOcrCameraBinding binding;
 
-    private static final String TAG = "OCR";
-
-    private static final String CLOUD_VISION_API_KEY = BuildConfig.API_KEY;
-    private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
-    private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
-    private static final int MAX_LABEL_RESULTS = 10;
-
-    Intent image;
+    Intent intentImage;
 
     private SurfaceView mSurfaceView;
     private SurfaceHolder mSurfaceViewHolder;
@@ -126,7 +99,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
 
-        image = new Intent(this, IngredientOcrImageActivity.class);
+        intentImage = new Intent(this, IngredientOcrImageActivity.class);
 
 
         FloatingActionButton fabOcrGallery = binding.fabOcrGallery;
@@ -141,7 +114,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
             }
         });
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //화면 켜진 상태 유지
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -247,6 +220,21 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
             buffer.get(bytes);
             final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
             new SaveImageTask().execute(bitmap);
+
+            Bitmap bitmap1 = null;
+            try {
+                bitmap1 = getRotatedBitmap(bitmap, mDeviceRotation);
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "사진 오류", Toast.LENGTH_SHORT).show();
+            }
+
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap1.compress(Bitmap.CompressFormat.JPEG, 80, stream);
+            bytes = stream.toByteArray();
+            intentImage.putExtra("image_data", bytes);
+            startActivity(intentImage);
+            finish();
+
         }
     };
 
@@ -412,6 +400,8 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
             }
 
             insertImage(getContentResolver(), bitmap, "" + System.currentTimeMillis(), "");
+
+
             return null;
         }
     }
@@ -429,10 +419,8 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
     }
 
     private void updateTextureViewSize(int viewWidth, int viewHeight) {
-        mSurfaceView.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight));
+        mSurfaceView.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight - 100));
     }
-
-
 
 
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
@@ -446,12 +434,12 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
                         try {
                             Bitmap bm = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
 
-                            callCloudVision(bm);
-
                             ByteArrayOutputStream stream = new ByteArrayOutputStream();
                             bm.compress(Bitmap.CompressFormat.JPEG, 80, stream);
                             byte[] bytes = stream.toByteArray();
-                            image.putExtra("image_data", bytes);
+                            intentImage.putExtra("image_data", bytes);
+                            startActivity(intentImage);
+                            finish();
 
 
                         } catch (FileNotFoundException e) {
@@ -465,153 +453,6 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
                 }
             }
     );
-
-    private void callCloudVision(final Bitmap bitmap) {
-
-        // Do the real work in an async task, because we need to use the network anyway
-        try {
-            AsyncTask<Object, Void, String> labelDetectionTask = new LableDetectionTask(this, prepareAnnotationRequest(bitmap));
-            labelDetectionTask.execute();
-        } catch (IOException e) {
-            Log.d(TAG, "failed to make API request because of other IOException " +
-                    e.getMessage());
-        }
-    }
-
-    private static class LableDetectionTask extends AsyncTask<Object, Void, String> {
-        private final WeakReference<IngredientOcrCameraActivity> mActivityWeakReference;
-        private Vision.Images.Annotate mRequest;
-
-        LableDetectionTask(IngredientOcrCameraActivity activity, Vision.Images.Annotate annotate) {
-            mActivityWeakReference = new WeakReference<>(activity);
-            mRequest = annotate;
-        }
-
-        @Override
-        protected String doInBackground(Object... params) {
-            try {
-                Log.d(TAG, "created Cloud Vision request object, sending request");
-                BatchAnnotateImagesResponse response = mRequest.execute();
-                return convertResponseToString(response);
-
-            } catch (GoogleJsonResponseException e) {
-                Log.d(TAG, "failed to make API request because " + e.getContent());
-            } catch (IOException e) {
-                Log.d(TAG, "failed to make API request because of other IOException " +
-                        e.getMessage());
-            }
-            return "Cloud Vision API request failed. Check logs for details.";
-        }
-
-        protected void onPostExecute(String result) {
-            IngredientOcrCameraActivity activity = mActivityWeakReference.get();
-            if (activity != null && !activity.isFinishing()) {
-                //TextView imageDetail = activity.binding.tvOcr;
-                //imageDetail.setText(result);
-
-                Intent intent = new Intent(activity, IngredientOcrImageActivity.class);
-                intent.putExtra("result_data", result);
-                intent.putExtra("image_data", activity.image.getByteArrayExtra("image_data"));
-                activity.startActivity(intent);
-
-
-            }
-        }
-    }
-
-    private static String convertResponseToString(BatchAnnotateImagesResponse response) {
-        String message = "I found these things:\n\n";
-
-        List<EntityAnnotation> labels = response.getResponses().get(0).getTextAnnotations();
-        if (labels != null) {
-            message = labels.get(0).getDescription();
-
-        } else {
-            message = "nothing";
-        }
-
-        //message = message.replaceAll("[^\uAC00-\uD7A3]", "");
-
-        String pattern = "당근";
-
-        Pattern compiledPattern = Pattern.compile(pattern);
-        Matcher matcher = compiledPattern.matcher(message);
-
-        if (matcher.find()) {
-            String extreactedText = matcher.group();
-            return extreactedText;
-        } else {
-            return "not found";
-        }
-
-
-        //return message;
-    }
-
-
-    private Vision.Images.Annotate prepareAnnotationRequest(Bitmap bitmap) throws IOException {
-        HttpTransport httpTransport = AndroidHttp.newCompatibleTransport();
-        JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
-
-        VisionRequestInitializer requestInitializer =
-                new VisionRequestInitializer(CLOUD_VISION_API_KEY) {
-
-                    @Override
-                    protected void initializeVisionRequest(VisionRequest<?> visionRequest)
-                            throws IOException {
-                        super.initializeVisionRequest(visionRequest);
-
-                        String packageName = getPackageName();
-                        visionRequest.getRequestHeaders().set(ANDROID_PACKAGE_HEADER, packageName);
-
-                        String sig = PackageManagerUtils.getSignature(getPackageManager(), packageName);
-
-                        visionRequest.getRequestHeaders().set(ANDROID_CERT_HEADER, sig);
-                    }
-                };
-
-        Vision.Builder builder = new Vision.Builder(httpTransport, jsonFactory, null);
-        builder.setVisionRequestInitializer(requestInitializer);
-
-        Vision vision = builder.build();
-
-        BatchAnnotateImagesRequest batchAnnotateImagesRequest =
-                new BatchAnnotateImagesRequest();
-        batchAnnotateImagesRequest.setRequests(new ArrayList<AnnotateImageRequest>() {{
-            AnnotateImageRequest annotateImageRequest = new AnnotateImageRequest();
-
-            // Add the image
-            Image base64EncodedImage = new Image();
-            // Convert the bitmap to a JPEG
-            // Just in case it's a format that Android understands but Cloud Vision
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, byteArrayOutputStream);
-            byte[] imageBytes = byteArrayOutputStream.toByteArray();
-
-            // Base64 encode the JPEG
-            base64EncodedImage.encodeContent(imageBytes);
-            annotateImageRequest.setImage(base64EncodedImage);
-
-            // add the features we want
-            annotateImageRequest.setFeatures(new ArrayList<Feature>() {{
-                Feature textDetection = new Feature();
-                textDetection.setType("TEXT_DETECTION");
-                textDetection.setMaxResults(MAX_LABEL_RESULTS);
-                add(textDetection);
-            }});
-
-            // Add the list of one thing to the request
-            add(annotateImageRequest);
-        }});
-
-        Vision.Images.Annotate annotateRequest =
-                vision.images().annotate(batchAnnotateImagesRequest);
-        // Due to a bug: requests to Vision API containing large images fail when GZipped.
-        annotateRequest.setDisableGZipContent(true);
-        Log.d(TAG, "created Cloud Vision request object, sending request");
-
-        return annotateRequest;
-    }
 
 
 }

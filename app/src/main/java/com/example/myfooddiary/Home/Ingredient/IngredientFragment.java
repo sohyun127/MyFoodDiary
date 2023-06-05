@@ -53,15 +53,6 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
         fabAddDirectly.setOnClickListener(this);
         fabOcr.setOnClickListener(this);
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-            if(!hasPermissions(PERMISSIONS)){
-                requestPermissions(PERMISSIONS,PERMISSIONS_REQUEST_CODE);
-            }else{
-                startActivity(new Intent(getActivity(),IngredientOcrCameraActivity.class));
-                getActivity().finish();
-            }
-        }
-
     }
 
     @Override
@@ -81,9 +72,15 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
                 Toast.makeText(requireContext(), "수동 추가", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.fab_ingredient_ocr:
-                Toast.makeText(requireContext(), "ocr", Toast.LENGTH_SHORT).show();
-                Intent it = new Intent(getActivity(), IngredientOcrCameraActivity.class);
-                startActivity(it);
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+                    if(!hasPermissions(PERMISSIONS)){
+                        requestPermissions(PERMISSIONS,PERMISSIONS_REQUEST_CODE);
+                    }else{
+                        Toast.makeText(requireContext(), "ocr", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(getActivity(),IngredientOcrCameraActivity.class));
+                        getActivity().finish();
+                    }
+                }
                 break;
 
 
