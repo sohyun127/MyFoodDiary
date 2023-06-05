@@ -66,5 +66,12 @@ dependencies {
     //형태소 분석
     implementation files('libs/kkma-2.1.jar')
 
+    //카메라 프리뷰
+    implementation 'androidx.camera:camera-camera2:1.1.0'
+
+    //circle image view
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+
 
 }
