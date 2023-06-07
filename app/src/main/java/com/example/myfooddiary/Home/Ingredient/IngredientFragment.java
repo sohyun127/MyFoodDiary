@@ -17,10 +17,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.FragmentIngredientBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class IngredientFragment extends Fragment implements View.OnClickListener {
 
@@ -28,6 +37,12 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
 
     // 플로팅버튼 상태
     private boolean fabMain_status = false;
+    private RecyclerView.Adapter adapter;
+    private ArrayList<Ingredient> arrayList;
+    private RecyclerView recyclerView;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+
 
     private static final int PERMISSIONS_REQUEST_CODE = 1000;
     String[] PERMISSIONS = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
@@ -45,6 +60,8 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        FirebaseApp.initializeApp(requireActivity().getApplicationContext());
+
         FloatingActionButton fabMain = binding.fabIngredientMain;
         FloatingActionButton fabAddDirectly = binding.fabIngredientAddDirectly;
         FloatingActionButton fabOcr = binding.fabIngredientOcr;
@@ -55,12 +72,44 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
 
         setTabLayout();
 
+        recyclerView = binding.rvIngredient;
+        recyclerView.setHasFixedSize(true);
+        arrayList = new ArrayList<>();
+
+        database = FirebaseDatabase.getInstance();
+
+        databaseReference = database.getReference("ingredient");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                arrayList.clear();
+                for (DataSnapshot snapshot: datasnapshot.getChildren()){
+                    Ingredient ingredient = snapshot.getValue(Ingredient.class);
+                    arrayList.add(ingredient);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(),"db 오류",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        adapter = new IngredientAdapter(arrayList,getContext());
+        recyclerView.setAdapter(adapter);
+
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void setAdapter(){
+
+
     }
 
 
