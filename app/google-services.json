@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1083480645749",
+    "firebase_url": "https://myfooddiary-4a367-default-rtdb.firebaseio.com",
+    "project_id": "myfooddiary-4a367",
+    "storage_bucket": "myfooddiary-4a367.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083480645749:android:35db26c16699b42e4a983c",
+        "android_client_info": {
+          "package_name": "com.example.myfooddiary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083480645749-5p81q1o4bbqaed3bnlk3qad0sjdaklsq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCqKP2iu5MyPjMs39A3BWruDIerBkgAok"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083480645749-5p81q1o4bbqaed3bnlk3qad0sjdaklsq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
