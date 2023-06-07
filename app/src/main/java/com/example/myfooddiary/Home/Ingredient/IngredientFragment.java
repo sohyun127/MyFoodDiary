@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,6 +93,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("dbderror",error.toString());
                 Toast.makeText(getContext(),"db 오류",Toast.LENGTH_SHORT).show();
             }
         });
@@ -114,10 +116,12 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
 
 
     private void setTabLayout(){
-        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("첫번째"));
-        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("첫번째"));
-        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("첫번째"));
-        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("첫번째"));
+        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("종합"));
+        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("육류"));
+        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("해물"));
+        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("채소"));
+        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("과일"));
+        binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("기타"));
     }
     @Override
     public void onClick(View v) {

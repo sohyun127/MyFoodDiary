@@ -31,8 +31,6 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="4"
             tools:listitem="@layout/item_ingredient" />
-
-
     </FrameLayout>
 
 
