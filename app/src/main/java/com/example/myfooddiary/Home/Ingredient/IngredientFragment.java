@@ -173,7 +173,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
             case R.id.fab_ingredient_add_directly:
                 Toast.makeText(requireContext(), "수동 추가", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(),IngredientAddDirectlyActivity.class));
-                getActivity().finish();
+                // getActivity().finish();
                 break;
             case R.id.fab_ingredient_ocr:
                 if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
