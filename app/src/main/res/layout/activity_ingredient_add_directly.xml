@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_ingredient_add_directly_tool_Bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_back"
+        app:title="재료 추가" />
+
+    <EditText
+        android:id="@+id/et_ingredient_add_directly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:background="@drawable/rectangle_gray7_radius_6"
+        android:hint="재료명을 검색해보세요."
+        android:minHeight="48dp"
+        android:paddingHorizontal="12dp"
+        android:textColorHint="@color/color_sub_gray5"
+        app:layout_constraintTop_toBottomOf="@id/tb_ingredient_add_directly_tool_Bar"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <View
+        android:id="@+id/view_ingredient_add_directly"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/color_sub_gray6"
+        app:layout_constraintTop_toBottomOf="@id/et_ingredient_add_directly" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:contentDescription="scrollview"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view_ingredient_add_directly">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_sub_gray7"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_ingredient_add_directly_meat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_ingredient_add_directly_meat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="육류"
+                    android:textColor="@color/color_sub_gray1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_ingredient_add_directly_meat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ingredient_add_directly_meat"
+                    app:spanCount="4"
+                    tools:listitem="@layout/item_ingredient" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_ingredient_add_directly_fish"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_ingredient_add_directly_fish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="해물"
+                    android:textColor="@color/color_sub_gray1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_ingredient_add_directly_fish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ingredient_add_directly_fish"
+                    app:spanCount="4"
+                    tools:itemCount="12"
+                    tools:listitem="@layout/item_ingredient" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_ingredient_add_directly_vegetable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_ingredient_add_directly_vegetable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="채소"
+                    android:textColor="@color/color_sub_gray1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_ingredient_add_directly_vegetable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ingredient_add_directly_vegetable"
+                    app:spanCount="4"
+                    tools:listitem="@layout/item_ingredient" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_ingredient_add_directly_fruit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_ingredient_add_directly_fruit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="과일"
+                    android:textColor="@color/color_sub_gray1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_ingredient_add_directly_fruit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ingredient_add_directly_fruit"
+                    app:spanCount="4"
+                    tools:listitem="@layout/item_ingredient" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_ingredient_add_directly_etc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/tv_ingredient_add_directly_etc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="기타"
+                    android:textColor="@color/color_sub_gray1"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_ingredient_add_directly_etc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintTop_toBottomOf="@id/tv_ingredient_add_directly_etc"
+                    app:spanCount="4"
+                    tools:listitem="@layout/item_ingredient" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
