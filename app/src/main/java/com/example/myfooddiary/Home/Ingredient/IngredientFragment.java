@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.FragmentIngredientBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -72,6 +73,17 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
         fabOcr.setOnClickListener(this);
 
         setTabLayout();
+        setAdapter(0);
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    private void setAdapter(int typeId){
 
         recyclerView = binding.rvIngredient;
         recyclerView.setHasFixedSize(true);
@@ -86,31 +98,25 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
                 arrayList.clear();
                 for (DataSnapshot snapshot: datasnapshot.getChildren()){
                     Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                    arrayList.add(ingredient);
+                    if(ingredient.getTypeId()==typeId){
+                        arrayList.add(ingredient);
+                    }
+                    else if (typeId==0) {
+                        arrayList.add(ingredient);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("dbderror",error.toString());
+                Log.d("db error",error.toString());
                 Toast.makeText(getContext(),"db 오류",Toast.LENGTH_SHORT).show();
             }
         });
 
         adapter = new IngredientAdapter(arrayList,getContext());
         recyclerView.setAdapter(adapter);
-
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    private void setAdapter(){
-
 
     }
 
@@ -122,6 +128,40 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
         binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("채소"));
         binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("과일"));
         binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("기타"));
+
+
+
+        binding.tabsIngredient.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                if(position==0){
+                    setAdapter(0);
+                }else if(position==1){
+                    setAdapter(1);
+                } else if (position==2) {
+                    setAdapter(2);
+                }else if (position==3) {
+                    setAdapter(3);
+                }else if (position==4) {
+                    setAdapter(4);
+                }else if (position==5) {
+                    setAdapter(5);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+
     }
     @Override
     public void onClick(View v) {
