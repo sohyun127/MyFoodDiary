@@ -11,4 +11,14 @@
     <color name="blue_50_main">#E1F6F2</color>
     <color name="yellow_main">#FFF7B8</color>
 
+
+    <!-- Sub Color -->
+    <color name="color_sub_gray1">#212124</color>
+    <color name="color_sub_gray2">#505156</color>
+    <color name="color_sub_gray3">#939499</color>
+    <color name="color_sub_gray4">#AFB0B4</color>
+    <color name="color_sub_gray5">#ADB5BD</color>
+    <color name="color_sub_gray6">#DCDCDE</color>
+    <color name="color_sub_gray7">#F2F3F5</color>
+
 </resources>
