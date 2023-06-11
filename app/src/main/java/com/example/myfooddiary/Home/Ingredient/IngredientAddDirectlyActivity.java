@@ -1,6 +1,8 @@
 package com.example.myfooddiary.Home.Ingredient;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -25,23 +27,12 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
 
     private ActivityIngredientAddDirectlyBinding binding;
 
-    private RecyclerView.Adapter adapterMeat;
-    private RecyclerView.Adapter adapterFish;
-    private RecyclerView.Adapter adapterVegetable;
-    private RecyclerView.Adapter adapterFruit;
-    private RecyclerView.Adapter adapterEtc;
-    private ArrayList<Ingredient> meatList;
-    private ArrayList<Ingredient> fishList;
-    private ArrayList<Ingredient> vegetableList;
-    private ArrayList<Ingredient> fruitList;
-    private ArrayList<Ingredient> etcList;
-    private ArrayList<Ingredient> fullList;
+    private RecyclerView.Adapter adapter;
+
     private ArrayList<Ingredient> searchList;
-    private RecyclerView recyclerMeatView;
-    private RecyclerView recyclerFishView;
-    private RecyclerView recyclerVegetableView;
-    private RecyclerView recyclerFruitView;
-    private RecyclerView recyclerEtcView;
+    private ArrayList<Ingredient> fullList;
+
+    private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
@@ -53,8 +44,8 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
         binding = ActivityIngredientAddDirectlyBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setAdapter();
         setClickEventOnToolBar();
+        setEventOnSearchBar();
     }
 
     private void setClickEventOnToolBar() {
@@ -64,29 +55,63 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
     }
 
     private void setEventOnSearchBar() {
+
+        setAdapter();
+
+        adapter = new IngredientAdapter(fullList, getApplicationContext());
+        recyclerView.setAdapter(adapter);
+
+
         etSearch = binding.etIngredientAddDirectly;
 
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String text = etSearch.getText().toString();
+                search(text);
+
+            }
+        });
+
+    }
+
+    private void search(String charText) {
+        fullList.clear();
+
+        if (charText.length() == 0) {
+            fullList.addAll(searchList);
+        } else {
+            for (int i = 0; i < searchList.size(); i++) {
+                if (searchList.get(i).getName().toLowerCase().contains(charText)) {
+                    fullList.add(searchList.get(i));
+                }
+            }
+        }
+
+        adapter.notifyDataSetChanged();
     }
 
     private void setAdapter() {
 
-        meatList = new ArrayList<>();
-        fishList = new ArrayList<>();
-        vegetableList = new ArrayList<>();
-        fruitList = new ArrayList<>();
-        etcList = new ArrayList<>();
         fullList = new ArrayList<>();
+        searchList = new ArrayList<>();
 
-        recyclerMeatView = binding.rvIngredientAddDirectlyMeat;
-        recyclerMeatView.setHasFixedSize(true);
-        recyclerFishView = binding.rvIngredientAddDirectlyFish;
-        recyclerFishView.setHasFixedSize(true);
-        recyclerVegetableView = binding.rvIngredientAddDirectlyVegetable;
-        recyclerVegetableView.setHasFixedSize(true);
-        recyclerFruitView = binding.rvIngredientAddDirectlyFruit;
-        recyclerFruitView.setHasFixedSize(true);
-        recyclerEtcView = binding.rvIngredientAddDirectlyEtc;
-        recyclerEtcView.setHasFixedSize(true);
+
+        recyclerView = binding.rvIngredientAddDirectly;
+        recyclerView.setHasFixedSize(true);
+
 
         database = FirebaseDatabase.getInstance();
 
@@ -94,43 +119,15 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                meatList.clear();
-                fishList.clear();
-                vegetableList.clear();
-                fruitList.clear();
-                etcList.clear();
                 fullList.clear();
 
                 for (DataSnapshot snapshot : datasnapshot.getChildren()) {
                     Ingredient ingredient = snapshot.getValue(Ingredient.class);
 
                     fullList.add(ingredient);
-
-                    switch (ingredient.getTypeId()) {
-                        case 1:
-                            meatList.add(ingredient);
-                            break;
-                        case 2:
-                            fishList.add(ingredient);
-                            break;
-                        case 3:
-                            vegetableList.add(ingredient);
-                            break;
-                        case 4:
-                            fruitList.add(ingredient);
-                            break;
-                        case 5:
-                            etcList.add(ingredient);
-                            break;
-
-                    }
-
+                    searchList.add(ingredient);
                 }
-                adapterMeat.notifyDataSetChanged();
-                adapterFish.notifyDataSetChanged();
-                adapterVegetable.notifyDataSetChanged();
-                adapterFruit.notifyDataSetChanged();
-                adapterEtc.notifyDataSetChanged();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -139,22 +136,6 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "db 오류", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-        adapterMeat = new IngredientAdapter(meatList, getApplicationContext());
-        recyclerMeatView.setAdapter(adapterMeat);
-
-        adapterFish = new IngredientAdapter(fishList, getApplicationContext());
-        recyclerFishView.setAdapter(adapterFish);
-
-        adapterVegetable = new IngredientAdapter(vegetableList, getApplicationContext());
-        recyclerVegetableView.setAdapter(adapterVegetable);
-
-        adapterFruit = new IngredientAdapter(fruitList, getApplicationContext());
-        recyclerFruitView.setAdapter(adapterFruit);
-
-        adapterEtc = new IngredientAdapter(etcList, getApplicationContext());
-        recyclerEtcView.setAdapter(adapterEtc);
 
     }
 
