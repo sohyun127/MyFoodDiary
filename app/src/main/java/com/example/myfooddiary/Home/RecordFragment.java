@@ -1,6 +1,5 @@
 package com.example.myfooddiary.Home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,6 @@ import com.example.myfooddiary.R;
 import com.example.myfooddiary.RecordDetailsFragment;
 import com.example.myfooddiary.databinding.FragmentRecordBinding;
 
-import android.widget.CalendarView;
-import android.widget.TextView;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -32,7 +29,7 @@ public class RecordFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentRecordBinding.inflate(inflater,container,false);
+        binding = FragmentRecordBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
 
@@ -43,31 +40,39 @@ public class RecordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        today=binding.today;
-        calendarView=binding.calendarView;
+        today = binding.today;
+        calendarView = binding.calendarView;
         DateFormat formatter = new SimpleDateFormat("yyyy년MM월dd일");
-        Date date=new Date(calendarView.getDate());
+        Date date = new Date(calendarView.getDate());
         today.setText(formatter.format(date));
 
+        Fragment recordDetailsFragment = new RecordDetailsFragment();
+
         //날짜 클릭 시 해당 날짜로 텍스트 변경
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
+        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth){
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 String day;
-                day=year+"년"+(month+1)+"월"+dayOfMonth+"일";
+                day = year + "년" + (month + 1) + "월" + dayOfMonth + "일";
                 today.setText(day);
 
-                Intent details = new Intent(getContext(), RecordDetailsFragment.class);
-               // startActivity(details);
+                changeFragment(recordDetailsFragment);
             }
 
         });
     }
 
+
+    private void changeFragment(Fragment fragment) {
+
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fcv_main, fragment).commit();
+
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding=null;
+        binding = null;
     }
 
 
