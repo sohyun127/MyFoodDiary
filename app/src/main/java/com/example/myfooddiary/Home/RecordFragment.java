@@ -1,5 +1,6 @@
 package com.example.myfooddiary.Home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.myfooddiary.R;
+import com.example.myfooddiary.RecordDetailsFragment;
 import com.example.myfooddiary.databinding.FragmentRecordBinding;
 
 import android.widget.CalendarView;
@@ -36,6 +38,7 @@ public class RecordFragment extends Fragment {
 
     }
 
+    //화면에 캘린더 띄우기
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -46,12 +49,16 @@ public class RecordFragment extends Fragment {
         Date date=new Date(calendarView.getDate());
         today.setText(formatter.format(date));
 
+        //날짜 클릭 시 해당 날짜로 텍스트 변경
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth){
                 String day;
                 day=year+"년"+(month+1)+"월"+dayOfMonth+"일";
                 today.setText(day);
+
+                Intent details = new Intent(getContext(), RecordDetailsFragment.class);
+               // startActivity(details);
             }
 
         });
