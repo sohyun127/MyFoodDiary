@@ -2,6 +2,7 @@ package com.example.myfooddiary.Home.Ingredient;
 
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -18,9 +19,17 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     private ArrayList<Ingredient> arrayList;
     private Context context;
 
-    public IngredientAdapter(ArrayList<Ingredient> arrayList, Context context) {
+
+    public interface OnItemClickListener{
+        void onItemClick(View v, int position);
+    }
+
+    private OnItemClickListener mListener=null;
+
+    public IngredientAdapter(ArrayList<Ingredient> arrayList, Context context, OnItemClickListener listener) {
         this.arrayList = arrayList;
         this.context = context;
+        this.mListener = listener;
     }
 
     @NonNull
@@ -47,6 +56,17 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         public IngredientViewHolder(ItemIngredientBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+
+            binding.getRoot().setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    int pos = getAdapterPosition();
+                    if(pos!=RecyclerView.NO_POSITION){
+                        if(mListener!=null){
+                            mListener.onItemClick(v,pos);
+                        }
+                    }
+                }
+            });
         }
 
         void bindItem(Ingredient item) {

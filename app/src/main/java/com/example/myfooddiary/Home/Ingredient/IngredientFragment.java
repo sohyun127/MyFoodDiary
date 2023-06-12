@@ -44,6 +44,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceUser;
 
 
     private static final int PERMISSIONS_REQUEST_CODE = 1000;
@@ -92,30 +93,63 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
         database = FirebaseDatabase.getInstance();
 
         databaseReference = database.getReference("ingredient");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        databaseReferenceUser = database.getReference("ingredient_user");
+
+        databaseReferenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                arrayList.clear();
-                for (DataSnapshot snapshot: datasnapshot.getChildren()){
-                    Ingredient ingredient = snapshot.getValue(Ingredient.class);
-                    if(ingredient.getTypeId()==typeId){
-                        arrayList.add(ingredient);
+            public void onDataChange(@NonNull DataSnapshot snapshotUser) {
+
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                        arrayList.clear();
+
+
+                            for (DataSnapshot snapshot: datasnapshot.getChildren()){
+                                Ingredient ingredient = snapshot.getValue(Ingredient.class);
+                                for(DataSnapshot snapshotUser:snapshotUser.getChildren()) {
+                                    String name = String.valueOf(snapshotUser.getValue());
+
+                                    if(ingredient.getName().equals(name)){
+                                        Log.d("test", name);
+                                        Log.d("list",ingredient.getName());
+                                        if (ingredient.getTypeId() == typeId) {
+                                            arrayList.add(ingredient);
+                                        } else if (typeId == 0) {
+                                            arrayList.add(ingredient);
+                                        }
+                                    }
+                                }
+                            }
+
+
+                        adapter.notifyDataSetChanged();
                     }
-                    else if (typeId==0) {
-                        arrayList.add(ingredient);
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.d("db error",error.toString());
+                        Toast.makeText(getContext(),"db 오류",Toast.LENGTH_SHORT).show();
                     }
-                }
-                adapter.notifyDataSetChanged();
+                });
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("db error",error.toString());
-                Toast.makeText(getContext(),"db 오류",Toast.LENGTH_SHORT).show();
+
             }
         });
 
-        adapter = new IngredientAdapter(arrayList,getContext());
+
+
+        adapter = new IngredientAdapter(arrayList, getContext(), new IngredientAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+
+            }
+        });
         recyclerView.setAdapter(adapter);
 
     }
@@ -173,7 +207,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
             case R.id.fab_ingredient_add_directly:
                 Toast.makeText(requireContext(), "수동 추가", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(),IngredientAddDirectlyActivity.class));
-                // getActivity().finish();
+                getActivity().finish();
                 break;
             case R.id.fab_ingredient_ocr:
                 if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){

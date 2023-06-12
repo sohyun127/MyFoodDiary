@@ -1,10 +1,12 @@
 package com.example.myfooddiary.Home.Ingredient;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myfooddiary.Home.MainActivity;
 import com.example.myfooddiary.databinding.ActivityIngredientAddDirectlyBinding;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +39,9 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
+
     private EditText etSearch;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,9 +63,16 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
 
         setAdapter();
 
-        adapter = new IngredientAdapter(fullList, getApplicationContext());
+        adapter = new IngredientAdapter(fullList, getApplicationContext(), new IngredientAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                Log.d("클릭", String.valueOf(fullList.get(position).getName()));
+                addIngredient(String.valueOf(fullList.get(position).getName()));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+            }
+        });
         recyclerView.setAdapter(adapter);
-
 
         etSearch = binding.etIngredientAddDirectly;
 
@@ -85,6 +97,10 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void addIngredient(String name) {
+        database.getReference("ingredient_user").child(name).setValue(name);
     }
 
     private void search(String charText) {
@@ -143,10 +159,12 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
+                startActivity(new Intent(this, MainActivity.class));
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 }
