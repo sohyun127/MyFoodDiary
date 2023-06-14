@@ -39,7 +39,6 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
 
-
     private EditText etSearch;
 
 

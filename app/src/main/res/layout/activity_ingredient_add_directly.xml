@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="재료 추가" />
+        app:title="재료 추가"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.sub_title" />
 
     <EditText
         android:id="@+id/et_ingredient_add_directly"

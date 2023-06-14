@@ -1,5 +1,6 @@
 package com.example.myfooddiary.Home.recipe;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -75,6 +76,7 @@ public class RecipeFragment extends Fragment {
 
                 }
 
+                Log.d("tesssst", String.valueOf(arrayList));
                 adapter.notifyDataSetChanged();
             }
 
@@ -88,7 +90,11 @@ public class RecipeFragment extends Fragment {
         adapter = new RecipeAdapter(arrayList, getContext(), new RecipeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-
+                Log.d("클릭", String.valueOf(arrayList.get(position).getName()));
+                Log.d("클릭", String.valueOf(position));
+                Intent intent = new Intent(getContext(), RecipeDetailActivity.class);
+                intent.putExtra("id",position);
+                startActivity(intent);
             }
         });
 

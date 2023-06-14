@@ -20,11 +20,11 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     private Context context;
 
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(View v, int position);
     }
 
-    private OnItemClickListener mListener=null;
+    private OnItemClickListener mListener = null;
 
     public IngredientAdapter(ArrayList<Ingredient> arrayList, Context context, OnItemClickListener listener) {
         this.arrayList = arrayList;
@@ -57,12 +57,12 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
             super(binding.getRoot());
             this.binding = binding;
 
-            binding.getRoot().setOnClickListener(new View.OnClickListener(){
-                public void onClick(View v){
+            binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
                     int pos = getAdapterPosition();
-                    if(pos!=RecyclerView.NO_POSITION){
-                        if(mListener!=null){
-                            mListener.onItemClick(v,pos);
+                    if (pos != RecyclerView.NO_POSITION) {
+                        if (mListener != null) {
+                            mListener.onItemClick(v, pos);
                         }
                     }
                 }
@@ -74,6 +74,5 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
             Glide.with(binding.getRoot()).load(item.getUrl()).into(binding.ivItemIngredient);
         }
     }
-
 
 }
