@@ -8,9 +8,9 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginHorizontal="10dp"
-        android:id="@+id/rv_home_recommend"
+        android:id="@+id/rv_recipe"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
         tools:itemCount="4"

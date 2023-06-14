@@ -1,12 +1,12 @@
 package com.example.myfooddiary;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfooddiary.Home.MainActivity;
 import com.example.myfooddiary.databinding.ActivitySigninBinding;
@@ -40,14 +40,17 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
                 Intent signup = new Intent(this, SignupActivity.class);
                 startActivity(signup); //회원가입 페이지로 이동
                 finish();
+                break;
             case R.id.btn_signin_login:
                 if (checkLogin()) {
                     Intent main = new Intent(this, MainActivity.class);
                     Snackbar.make(binding.getRoot(), "로그인에 성공했습니다.", Snackbar.LENGTH_SHORT).show();
                     startActivity(main);
                     finish();
+                    break;
                 } else {
                     Snackbar.make(binding.getRoot(), "로그인에 실패했습니다.", Snackbar.LENGTH_SHORT).show();
+                    break;
                 }
 
         }
