@@ -40,6 +40,7 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
 
     private EditText etSearch;
+    private  IngredientAddDirectlyDialog dialog;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,12 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    private void setDialog(){
+        dialog= new IngredientAddDirectlyDialog(this);
+
+        dialog.show();
+    }
+
     private void setEventOnSearchBar() {
 
         setAdapter();
@@ -66,9 +73,10 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Log.d("클릭", String.valueOf(fullList.get(position).getName()));
-                addIngredient(String.valueOf(fullList.get(position).getName()));
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
+                setDialog();
+                //addIngredient(String.valueOf(fullList.get(position).getName()));
+                //startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                //finish();
             }
         });
         recyclerView.setAdapter(adapter);
