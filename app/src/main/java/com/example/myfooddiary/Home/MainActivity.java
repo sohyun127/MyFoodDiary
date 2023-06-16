@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     case R.id.menu_record:
                         changeFragment(recordFragment);
                         return true;
+                    case R.id.menu_my_page:
+                        //changeFragment(recordFragment);
+                        return true;
                 }
                 return false;
             }

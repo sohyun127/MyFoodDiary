@@ -13,4 +13,10 @@
         <item name="android:statusBarColor">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="AnimationPopupStyle">
+        <item name="android:windowEnterAnimation">@anim/open</item>
+        <item name="android:windowExitAnimation">@anim/close</item>
+    </style>
+
 </resources>
