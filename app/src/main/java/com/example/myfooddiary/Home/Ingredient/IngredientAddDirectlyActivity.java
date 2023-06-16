@@ -61,7 +61,6 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
 
     private void setDialog(String name){
         dialog= new IngredientAddDirectlyDialog(this,name);
-
         dialog.show();
     }
 

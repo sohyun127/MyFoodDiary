@@ -41,10 +41,13 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
     private boolean fabMain_status = false;
     private RecyclerView.Adapter adapter;
     private ArrayList<Ingredient> arrayList;
+    private ArrayList<IngredientUser> userArrayList;
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReferenceUser;
+    private  IngredientDialog dialog;
+
 
 
     private static final int PERMISSIONS_REQUEST_CODE = 1000;
@@ -84,11 +87,17 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
         binding = null;
     }
 
+    private void setDialog(String name, String count){
+        dialog= new IngredientDialog(getContext(),name,count);
+        dialog.show();
+    }
+
     private void setAdapter(int typeId){
 
         recyclerView = binding.rvIngredient;
         recyclerView.setHasFixedSize(true);
         arrayList = new ArrayList<>();
+        userArrayList = new ArrayList<>();
 
         database = FirebaseDatabase.getInstance();
 
@@ -116,8 +125,10 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
                                         Log.d("list",ingredient.getName());
                                         if (ingredient.getTypeId() == typeId) {
                                             arrayList.add(ingredient);
+                                            userArrayList.add(ingredientUser);
                                         } else if (typeId == 0) {
                                             arrayList.add(ingredient);
+                                            userArrayList.add(ingredientUser);
                                         }
                                     }
                                 }
@@ -147,7 +158,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
         adapter = new IngredientAdapter(arrayList, getContext(), new IngredientAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-
+                setDialog(arrayList.get(position).getName(),userArrayList.get(position).getCount());
             }
         });
         recyclerView.setAdapter(adapter);
