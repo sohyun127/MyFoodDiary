@@ -1,12 +1,11 @@
 package com.example.myfooddiary;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfooddiary.databinding.ActivitySignupBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -14,7 +13,6 @@ import com.google.android.material.snackbar.Snackbar;
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivitySignupBinding binding;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +22,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         Button btnComplete = binding.btnSignupComplete;
         btnComplete.setOnClickListener(this);
+
     }
 
     @Override

@@ -21,6 +21,12 @@
             android:name=".Home.MainActivity"
             android:exported="false" />
         <activity
+            android:name=".Home.Ingredient.IngredientAddDirectlyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Home.recipe.RecipeDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".Home.Ingredient.IngredientOcrImageActivity"
             android:exported="false" />
         <activity

@@ -218,13 +218,13 @@
     </androidx.core.widget.NestedScrollView>
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_signup_complete"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
-        android:background="@color/yellow_main"
+        android:background="@drawable/rectangle_radius_8"
         android:paddingVertical="10dp"
         android:text="완료"
         android:textSize="16sp"

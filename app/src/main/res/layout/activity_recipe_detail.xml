@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_recipe_tool_Bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="요리하기"
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.sub_title" />
+
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/sv_recipe_detail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="scroll"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tb_recipe_tool_Bar">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_recipe_detail"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="1:0.4"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tv_recipe_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.title1"
+                app:layout_constraintTop_toBottomOf="@id/iv_recipe_detail"
+                tools:text="요리 이름" />
+
+
+            <TextView
+                android:id="@+id/tv_recipe_title_kcal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="30dp"
+                android:text="칼로리"
+                android:textAppearance="@style/TextAppearance.AppCompat.title2"
+                app:layout_constraintTop_toBottomOf="@id/tv_recipe_title" />
+
+            <TextView
+                android:id="@+id/tv_recipe_kcal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:text="100kcal"
+                android:textAppearance="@style/TextAppearance.AppCompat.body1"
+                app:layout_constraintTop_toBottomOf="@id/tv_recipe_title_kcal" />
+
+
+            <TextView
+                android:id="@+id/tv_recipe_title_ingredient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="30dp"
+                android:text="식재료"
+                android:textAppearance="@style/TextAppearance.AppCompat.title2"
+                app:layout_constraintTop_toBottomOf="@id/tv_recipe_kcal" />
+
+            <TextView
+                android:id="@+id/tv_recipe_ingredient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:text="달걀 1개, 크래미 3개, 소금 약간"
+                android:textAppearance="@style/TextAppearance.AppCompat.body1"
+                app:layout_constraintTop_toBottomOf="@id/tv_recipe_title_ingredient" />
+
+
+            <TextView
+                android:id="@+id/tv_recipe_title_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="30dp"
+                android:text="레시피"
+                android:textAppearance="@style/TextAppearance.AppCompat.title2"
+                app:layout_constraintTop_toBottomOf="@id/tv_recipe_ingredient" />
+
+            <TextView
+                android:id="@+id/tv_recipe_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="10dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.body1"
+                app:layout_constraintTop_toBottomOf="@id/tv_recipe_title_order"
+                tools:text="1. 흰자 3, 노른자 3, 계란 1로 분리해주세요 크래미는 잘게 썰어주세요." />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_signup_complete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="30dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/rectangle_radius_8"
+                android:paddingVertical="10dp"
+                android:text="완료"
+                android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_recipe_order" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

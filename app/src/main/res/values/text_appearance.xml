@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="TextAppearance.AppCompat.title1">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/color_sub_gray1</item>
+        <item name="fontFamily">@font/nanum_squre_neo_bold</item>
+        <item name="lineHeight">29.7sp</item>
+    </style>
+    <style name="TextAppearance.AppCompat.title2">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/color_sub_gray1</item>
+        <item name="fontFamily">@font/nanum_squre_neo_bold</item>
+        <item name="lineHeight">26.4sp</item>
+    </style>
+    <style name="TextAppearance.AppCompat.sub_title">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/color_sub_gray1</item>
+        <item name="fontFamily">@font/nanum_squre_neo_semi_bold</item>
+        <item name="lineHeight">19.6sp</item>
+    </style>
+    <style name="TextAppearance.AppCompat.body1">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/color_sub_gray1</item>
+        <item name="fontFamily">@font/nanum_squre_neo_regular</item>
+        <item name="lineHeight">19.6sp</item>
+    </style>
+    <style name="TextAppearance.AppCompat.body2">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/color_sub_gray1</item>
+        <item name="fontFamily">@font/nanum_squre_neo_regular</item>
+        <item name="lineHeight">19.8sp</item>
+    </style>
+    <style name="TextAppearance.AppCompat.body3">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/color_sub_gray1</item>
+        <item name="fontFamily">@font/nanum_squre_neo_regular</item>
+        <item name="lineHeight">18.15sp</item>
+    </style>
+
+
+</resources>
