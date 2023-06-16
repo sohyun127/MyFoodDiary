@@ -4,13 +4,17 @@
     <item
         android:id="@+id/menu_ingredient"
         android:icon="@drawable/ic_ingredient"
-        android:title="재료"/>
+        android:title="재료" />
     <item
         android:id="@+id/menu_recipe"
         android:icon="@drawable/ic_recipe"
-        android:title="레시피"/>
+        android:title="레시피" />
     <item
         android:id="@+id/menu_record"
         android:icon="@drawable/ic_record"
-        android:title="기록"/>
+        android:title="기록" />
+    <item
+        android:id="@+id/menu_my_page"
+        android:icon="@drawable/ic_my_page"
+        android:title="마이페이지" />
 </menu>
