@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Fragment ingredientFragment = new IngredientFragment();
         Fragment recipeFragment = new RecipeFragment();
         Fragment recordFragment = new RecordFragment();
+        Fragment mypageFragment = new MyPageFragment();
 
         BottomNavigationView bnv = binding.bnvMain;
 
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         changeFragment(recordFragment);
                         return true;
                     case R.id.menu_my_page:
-                        //changeFragment(recordFragment);
+                        changeFragment(mypageFragment);
                         return true;
                 }
                 return false;
