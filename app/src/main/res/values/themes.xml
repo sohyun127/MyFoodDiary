@@ -1,13 +1,13 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.MyFoodDiary" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/yellow_main</item>
-        <item name="colorPrimaryVariant">@color/yellow_sub</item>
+        <item name="colorPrimary">@color/color_sub_gray3</item>
+        <item name="colorPrimaryVariant">@color/color_sub_gray2</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/color_sub_gray3</item>
-        <item name="colorSecondaryVariant">@color/color_sub_gray2</item>
+        <item name="colorSecondary">@color/yellow_main</item>
+        <item name="colorSecondaryVariant">@color/yellow_sub</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorSecondary</item>

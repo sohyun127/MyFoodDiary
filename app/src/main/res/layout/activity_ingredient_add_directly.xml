@@ -12,7 +12,7 @@
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:title="재료 추가"
-        app:titleTextAppearance="@style/TextAppearance.AppCompat.sub_title" />
+        app:titleTextAppearance="@style/TextAppearance.AppCompat.title2" />
 
     <EditText
         android:id="@+id/et_ingredient_add_directly"
@@ -23,6 +23,7 @@
         android:hint="재료명을 검색해보세요."
         android:minHeight="48dp"
         android:paddingHorizontal="12dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
         android:textColorHint="@color/color_sub_gray5"
         app:layout_constraintTop_toBottomOf="@id/tb_ingredient_add_directly_tool_Bar"
         tools:layout_editor_absoluteX="16dp" />
