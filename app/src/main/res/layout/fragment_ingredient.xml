@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:tabMode="fixed"
+        app:tabTextAppearance="@style/TextAppearance.AppCompat.title2"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <FrameLayout

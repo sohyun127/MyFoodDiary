@@ -59,9 +59,8 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setDialog(){
-        dialog= new IngredientAddDirectlyDialog(this);
-
+    private void setDialog(String name){
+        dialog= new IngredientAddDirectlyDialog(this,name);
         dialog.show();
     }
 
@@ -73,10 +72,7 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View v, int position) {
                 Log.d("클릭", String.valueOf(fullList.get(position).getName()));
-                setDialog();
-                //addIngredient(String.valueOf(fullList.get(position).getName()));
-                //startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                //finish();
+                setDialog(fullList.get(position).getName());
             }
         });
         recyclerView.setAdapter(adapter);
@@ -106,9 +102,7 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
 
     }
 
-    public void addIngredient(String name) {
-        database.getReference("ingredient_user").child(name).setValue(name);
-    }
+
 
     private void search(String charText) {
         fullList.clear();

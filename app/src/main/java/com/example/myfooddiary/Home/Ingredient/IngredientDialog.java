@@ -10,25 +10,29 @@ import android.view.WindowManager;
 
 import com.example.myfooddiary.Home.MainActivity;
 import com.example.myfooddiary.R;
-import com.example.myfooddiary.databinding.DialogIngredientAddDirectlyBinding;
+import com.example.myfooddiary.databinding.DialogIngredientBinding;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class IngredientAddDirectlyDialog extends Dialog {
+public class IngredientDialog extends Dialog {
+
+    private DialogIngredientBinding binding;
 
     protected Context mContext;
-    protected  String name;
+    protected String name;
+    protected String count;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-    private DialogIngredientAddDirectlyBinding binding;
 
-    public IngredientAddDirectlyDialog(Context context,String name) {
+
+    public IngredientDialog(Context context, String name, String count) {
         super(context);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        binding = DialogIngredientAddDirectlyBinding.inflate(getLayoutInflater());
+        binding = DialogIngredientBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         this.mContext = context;
         this.name = name;
+        this.count = count;
 
         setCancelable(true);
         setCanceledOnTouchOutside(true);
@@ -39,7 +43,8 @@ public class IngredientAddDirectlyDialog extends Dialog {
             // 화면에 가득 차도록
             params.width = WindowManager.LayoutParams.MATCH_PARENT;
             params.height = 1000;
-            binding.tvDialogIngredientAddDirectlyName.setText("NAME.  "+name);
+            binding.tvDialogIngredientName.setText("NAME.  " + name);
+            binding.tvDialogIngredientCount.setText("COUNT.  " + count);
 
             // 열기&닫기 시 애니메이션 설정
             params.windowAnimations = R.style.AnimationPopupStyle;
@@ -47,10 +52,10 @@ public class IngredientAddDirectlyDialog extends Dialog {
             // UI 하단 정렬
             window.setGravity(Gravity.BOTTOM);
 
-            binding.btnDialogIngredientAddDirectly.setOnClickListener(new View.OnClickListener() {
+            binding.btnDialogIngredient.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    addIngredient(name);
+                    removeData();
                     mContext.startActivity(new Intent(context, MainActivity.class));
                     dismiss();
                 }
@@ -58,13 +63,10 @@ public class IngredientAddDirectlyDialog extends Dialog {
         }
     }
 
-
-    public void addIngredient(String name) {
-
+    private void removeData() {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("ingredient_user");
-        databaseReference.child(name).setValue(new IngredientUser(name, binding.etDialogIngredientAddDirectlyCount.getText().toString()));
-
+        databaseReference.child(name).removeValue();
     }
 
 }
