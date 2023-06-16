@@ -1,6 +1,7 @@
 package com.example.myfooddiary.Home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.RecordDetailsFragment;
@@ -26,6 +28,7 @@ public class RecordFragment extends Fragment {
 
 
     private FragmentRecordBinding binding;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,13 +51,20 @@ public class RecordFragment extends Fragment {
 
         Fragment recordDetailsFragment = new RecordDetailsFragment();
 
-        //날짜 클릭 시 해당 날짜로 텍스트 변경
+        //날짜 클릭 시 해당 날짜로  today 텍스트 변경
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 String day;
                 day = year + "년" + (month + 1) + "월" + dayOfMonth + "일";
                 today.setText(day);
+
+                Log.d("send",today.toString());
+                Fragment fragment = new RecordDetailsFragment();
+                Bundle args = new Bundle();
+                args.putString("today", String.valueOf(today));
+                fragment.setArguments(args);
+
 
                 changeFragment(recordDetailsFragment);
             }
@@ -68,6 +78,8 @@ public class RecordFragment extends Fragment {
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fcv_main, fragment).commit();
 
     }
+
+
 
     @Override
     public void onDestroyView() {

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#DFDFDF"
+    tools:context=".Home.MyPageFragment">
+
+
+    <TextView
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/mypage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#AFAFAF"
+        android:text="\nMy Page\n"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/mypage"
+        android:textSize="22sp"
+        android:text="Nickname"  />
+
+    <TextView
+        android:id="@+id/gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nickname"
+        android:textSize="22sp"
+        android:text="Gender"  />
+
+    <TextView
+        android:id="@+id/birth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="25dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gender"
+        android:textSize="22sp"
+        android:text="Birth"  />
+
+    <TextView
+        android:id="@+id/height"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="25dp"
+        app:layout_constraintTop_toBottomOf="@id/birth"
+        android:textSize="22sp"
+        android:text="Height"  />
+
+    <TextView
+        android:id="@+id/weight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="25dp"
+        app:layout_constraintTop_toBottomOf="@id/height"
+        android:textSize="22sp"
+        android:text="Weight"  />
+
+    <TextView
+        android:id="@+id/target_calories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginVertical="25dp"
+        app:layout_constraintTop_toBottomOf="@id/weight"
+        android:textSize="22sp"
+        android:text="Target Calories"  />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

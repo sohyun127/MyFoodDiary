@@ -9,11 +9,11 @@
         android:id="@+id/today"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="yyyy년mm월dd일"
+        android:text="   yyyy년mm월dd일   "
         android:textSize="30sp"
         android:layout_above="@+id/calendarView"
         android:layout_centerHorizontal="true"
-
+        android:background="@drawable/et_siginup_rectangle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
