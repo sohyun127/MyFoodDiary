@@ -109,10 +109,10 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
                             for (DataSnapshot snapshot: datasnapshot.getChildren()){
                                 Ingredient ingredient = snapshot.getValue(Ingredient.class);
                                 for(DataSnapshot snapshotUser:snapshotUser.getChildren()) {
-                                    String name = String.valueOf(snapshotUser.getValue());
+                                    IngredientUser ingredientUser = snapshotUser.getValue(IngredientUser.class);
 
-                                    if(ingredient.getName().equals(name)){
-                                        Log.d("test", name);
+                                    if(ingredient.getName().equals(ingredientUser.getName())){
+                                        Log.d("test", ingredient.getName());
                                         Log.d("list",ingredient.getName());
                                         if (ingredient.getTypeId() == typeId) {
                                             arrayList.add(ingredient);
