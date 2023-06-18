@@ -1,4 +1,4 @@
-package com.example.myfooddiary;
+package com.example.myfooddiary.Home.record;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.example.myfooddiary.Home.recipe.RecordAddActivity;
+import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.FragmentRecordDetailsBinding;
 
 public class RecordDetailsFragment extends Fragment implements View.OnClickListener {
@@ -58,7 +58,6 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
         switch (v.getId()) {
             case R.id.new_food:
                 startActivity(new Intent(getActivity(), RecordAddActivity.class));
-                getActivity().finish();
         }
     }
 }

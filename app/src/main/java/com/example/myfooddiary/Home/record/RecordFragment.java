@@ -1,4 +1,4 @@
-package com.example.myfooddiary.Home;
+package com.example.myfooddiary.Home.record;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +14,6 @@ import androidx.fragment.app.Fragment;
 
 
 import com.example.myfooddiary.R;
-import com.example.myfooddiary.RecordDetailsFragment;
 import com.example.myfooddiary.databinding.FragmentRecordBinding;
 
 import java.text.DateFormat;

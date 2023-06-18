@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.myfooddiary.Home.Ingredient.IngredientFragment;
 import com.example.myfooddiary.Home.recipe.RecipeFragment;
+import com.example.myfooddiary.Home.record.RecordFragment;
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
