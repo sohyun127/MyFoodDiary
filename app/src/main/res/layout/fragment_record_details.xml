@@ -24,7 +24,7 @@
         android:gravity="center"
         android:text="[YYYY.MM.DD]"
         android:textAppearance="@style/TextAppearance.AppCompat.title1"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tb_record_detail_tool_Bar" />
 
 
     <ImageView
@@ -72,7 +72,7 @@
         android:id="@+id/tv_record_detail_line_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="50dp"
         android:gravity="center"
         android:singleLine="true"
         android:text="========================================"
@@ -85,7 +85,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:text="Total:"
         android:textAppearance="@style/TextAppearance.AppCompat.title2"
         app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +96,7 @@
         android:id="@+id/tv_record_detail_total_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:layout_marginEnd="30dp"
         android:text="+100kcal"
         android:textAppearance="@style/TextAppearance.AppCompat.title2"
@@ -109,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:src="@drawable/img_logo"
         app:layout_constraintBottom_toBottomOf="parent" />
 

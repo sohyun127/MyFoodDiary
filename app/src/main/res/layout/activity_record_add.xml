@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="[Sign Up]"
+        android:text="[Diet Record]"
         android:textAppearance="@style/TextAppearance.AppCompat.title1"
         app:layout_constraintTop_toBottomOf="@id/tb_record_add_tool_Bar" />
 
@@ -174,7 +174,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="[KCAL]"
         android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
         app:layout_constraintStart_toStartOf="parent"
@@ -216,12 +216,14 @@
         android:id="@+id/iv_record_add"
         android:layout_width="0dp"
         android:layout_height="80dp"
+        android:clipToOutline="true"
+        android:background="@drawable/rectangle_gray7_radius_6"
         android:layout_marginStart="50dp"
+        android:src="@drawable/ic_record_food"
         android:layout_marginTop="10dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_record_add_photo"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintTop_toBottomOf="@id/tv_record_add_photo" />
 
     <TextView
         android:id="@+id/tv_record_add_line_2"
@@ -244,7 +246,7 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/rectangle_radius_8"
         android:paddingVertical="10dp"
-        android:text="SIGN UP"
+        android:text="기록하기"
         android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_record_add_line_2" />

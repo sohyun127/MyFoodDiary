@@ -49,8 +49,8 @@ public class RecipeFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         binding = null;
+        super.onDestroyView();
     }
 
     private void setAdapter() {
