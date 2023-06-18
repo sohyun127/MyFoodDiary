@@ -2,10 +2,13 @@ package com.example.myfooddiary;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.myfooddiary.databinding.ActivitySignupBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -22,7 +25,17 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         Button btnComplete = binding.btnSignupComplete;
         btnComplete.setOnClickListener(this);
+        binding.checkSignupWomen.setOnClickListener(this);
+        binding.checkSignupMen.setOnClickListener(this);
+        setClickEventOnToolBar();
 
+    }
+
+
+    private void setClickEventOnToolBar() {
+        Toolbar toolbar = binding.tbSignupToolBar;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -31,13 +44,29 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.btn_signup_complete:
                 Intent it = new Intent(this, SigninActivity.class);
                 Snackbar.make(binding.getRoot(), "회원가입에 성공했습니다.", Snackbar.LENGTH_SHORT).show();
-
                 it.putExtra("id", binding.etSignupId.getText().toString());
                 it.putExtra("pw", binding.etSignupPw.getText().toString());
                 startActivity(it);
                 finish();
+                break;
+            case R.id.check_signup_women:
+                binding.checkSignupMen.setChecked(false);
+                break;
+            case R.id.check_signup_men:
+                binding.checkSignupWomen.setChecked(false);
+                break;
         }
 
 
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                startActivity(new Intent(this, SigninActivity.class));
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

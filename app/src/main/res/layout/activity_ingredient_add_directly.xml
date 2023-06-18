@@ -11,30 +11,40 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="재료 추가"
+        app:title="[재료 추가]"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.title2" />
 
-    <EditText
-        android:id="@+id/et_ingredient_add_directly"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:id="@+id/layout_ingredient_add_directly"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:background="@drawable/rectangle_gray7_radius_6"
-        android:hint="재료명을 검색해보세요."
-        android:minHeight="48dp"
-        android:paddingHorizontal="12dp"
-        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
-        android:textColorHint="@color/color_sub_gray5"
-        app:layout_constraintTop_toBottomOf="@id/tb_ingredient_add_directly_tool_Bar"
-        tools:layout_editor_absoluteX="16dp" />
-
-    <View
-        android:id="@+id/view_ingredient_add_directly"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
         android:layout_marginTop="10dp"
-        android:background="@color/color_sub_gray6"
-        app:layout_constraintTop_toBottomOf="@id/et_ingredient_add_directly" />
+        app:layout_constraintTop_toBottomOf="@id/tb_ingredient_add_directly_tool_Bar">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_ingredient_add_directly"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="재료명을 검색해보세요."
+            android:inputType="text"
+            android:paddingHorizontal="15dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_ingredient_add_directly_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="----------------------------------------------------"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintTop_toBottomOf="@id/layout_ingredient_add_directly" />
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -44,7 +54,7 @@
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="4"
         tools:listitem="@layout/item_ingredient"
-       app:layout_constraintTop_toBottomOf="@id/view_ingredient_add_directly"
+       app:layout_constraintTop_toBottomOf="@id/tv_ingredient_add_directly_line"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 

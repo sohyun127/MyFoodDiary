@@ -13,7 +13,8 @@
 
 
     <!-- Sub Color -->
-    <color name="color_sub_gray1">#212124</color>
+    <color name="color_sub_gray1">#212121</color>
+    <color name="grey_800">#424242</color>
     <color name="color_sub_gray2">#505156</color>
     <color name="color_sub_gray3">#939499</color>
     <color name="color_sub_gray4">#AFB0B4</color>

@@ -39,7 +39,7 @@ public class IngredientAddDirectlyDialog extends Dialog {
             // 화면에 가득 차도록
             params.width = WindowManager.LayoutParams.MATCH_PARENT;
             params.height = 1000;
-            binding.tvDialogIngredientAddDirectlyName.setText("NAME.  "+name);
+            binding.tvDialogIngredientAddDirectlyName.setText("NAME.     "+name);
 
             // 열기&닫기 시 애니메이션 설정
             params.windowAnimations = R.style.AnimationPopupStyle;
