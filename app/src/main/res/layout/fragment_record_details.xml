@@ -6,25 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Home.record.RecordDetailsFragment">
 
-
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tb_record_detail_tool_Bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title=" " />
-
-
     <TextView
         android:id="@+id/tv_record_detail_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
+        android:layout_marginTop="30dp"
         android:gravity="center"
+        android:scaleType="centerCrop"
         android:text="[YYYY.MM.DD]"
         android:textAppearance="@style/TextAppearance.AppCompat.title1"
-        app:layout_constraintTop_toBottomOf="@id/tb_record_detail_tool_Bar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <ImageView
@@ -65,7 +56,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/tv_record_detail_line_2"
         app:layout_constraintTop_toBottomOf="@id/tv_record_detail_line"
-        tools:listitem="@layout/item_record"/>
+        tools:listitem="@layout/item_record" />
 
 
     <TextView
@@ -115,7 +106,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/new_food"
+        android:id="@+id/fab_record_detail_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="300dp"

@@ -11,7 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.FragmentRecordBinding;
@@ -58,14 +58,17 @@ public class RecordFragment extends Fragment {
                 day = year + "년" + (month + 1) + "월" + dayOfMonth + "일";
                 today.setText(day);
 
-                Log.d("send",today.toString());
+                Bundle bundle = new Bundle();
+                bundle.putString("day", day);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment fragment = new RecordDetailsFragment();
-                Bundle args = new Bundle();
-                args.putString("today", String.valueOf(today));
-                fragment.setArguments(args);
+                fragment.setArguments(bundle);
+                transaction.replace(R.id.fcv_main,fragment);
+                transaction.commit();
+                Log.d("send",day);
 
 
-                changeFragment(recordDetailsFragment);
+
             }
 
         });

@@ -2,12 +2,10 @@ package com.example.myfooddiary.Home.record;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,22 +18,15 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
 
     public CalendarView calendarView;
     private FragmentRecordDetailsBinding binding;
-    TextView record_date;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentRecordDetailsBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
-        // Bundle args=getArguments();
 
-        binding.newFood.setOnClickListener(this);
 
-        if (getArguments() != null) {
-            Log.d("getttttt", getArguments().getString("today"));
-            String date = getArguments().getString("today");
-            record_date.setText(date);
-        }
+        binding.fabRecordDetailAdd.setOnClickListener(this);
+
 
         return view;
     }
@@ -44,6 +35,16 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (getArguments() != null) {
+            String date = getArguments().getString("day");
+           binding.tvRecordDetailTitle.setText("["+date+"]");
+        }
 
     }
 
@@ -56,7 +57,7 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.new_food:
+            case R.id.fab_record_detail_add:
                 startActivity(new Intent(getActivity(), RecordAddActivity.class));
         }
     }
