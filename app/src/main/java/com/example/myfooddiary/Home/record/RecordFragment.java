@@ -48,8 +48,6 @@ public class RecordFragment extends Fragment {
         Date date = new Date(calendarView.getDate());
         today.setText(formatter.format(date));
 
-        Fragment recordDetailsFragment = new RecordDetailsFragment();
-
         //날짜 클릭 시 해당 날짜로  today 텍스트 변경
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -73,14 +71,6 @@ public class RecordFragment extends Fragment {
 
         });
     }
-
-
-    private void changeFragment(Fragment fragment) {
-
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fcv_main, fragment).commit();
-
-    }
-
 
 
     @Override

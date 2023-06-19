@@ -217,6 +217,7 @@
         android:layout_width="0dp"
         android:layout_height="80dp"
         android:clipToOutline="true"
+        android:scaleType="centerCrop"
         android:background="@drawable/rectangle_gray7_radius_6"
         android:layout_marginStart="50dp"
         android:src="@drawable/ic_record_food"

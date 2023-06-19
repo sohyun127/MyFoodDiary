@@ -7,6 +7,10 @@ public class Record {
     private String kcal;
     private String url;
 
+    public Record(){
+
+    }
+
     public Record(String time,String food,String kcal,String url) {
         this.time = time;
         this.food = food;

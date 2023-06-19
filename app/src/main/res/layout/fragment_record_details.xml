@@ -10,9 +10,9 @@
         android:id="@+id/tv_record_detail_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
         android:scaleType="centerCrop"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
         android:text="[YYYY.MM.DD]"
         android:textAppearance="@style/TextAppearance.AppCompat.title1"
         app:layout_constraintTop_toTopOf="parent" />
@@ -56,7 +56,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/tv_record_detail_line_2"
         app:layout_constraintTop_toBottomOf="@id/tv_record_detail_line"
-        tools:listitem="@layout/item_record" />
+        tools:listitem="@layout/item_record"/>
 
 
     <TextView
@@ -76,7 +76,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:text="Total:"
         android:textAppearance="@style/TextAppearance.AppCompat.title2"
         app:layout_constraintStart_toStartOf="parent"
@@ -87,7 +87,7 @@
         android:id="@+id/tv_record_detail_total_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:text="+100kcal"
         android:textAppearance="@style/TextAppearance.AppCompat.title2"
@@ -100,7 +100,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="100dp"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/img_logo"
         app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -110,14 +110,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="300dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:clickable="true"
         android:contentDescription="addFab"
         android:focusable="true"
         android:src="@drawable/ic_add"
         android:visibility="visible"
         app:backgroundTint="@color/yellow_sub"
-        app:layout_constraintBottom_toTopOf="@id/tv_record_detail_line_2"
+        app:layout_constraintBottom_toTopOf="@id/tv_record_detail_total_detail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
