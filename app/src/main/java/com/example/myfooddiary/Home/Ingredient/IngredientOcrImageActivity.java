@@ -27,14 +27,14 @@ import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class IngredientOcrImageActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -46,6 +46,7 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
     private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
     private static final int MAX_LABEL_RESULTS = 10;
+
 
     Bitmap bitmap;
 
@@ -116,7 +117,7 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
             try {
                 Log.d(TAG, "created Cloud Vision request object, sending request");
                 BatchAnnotateImagesResponse response = mRequest.execute();
-                return convertResponseToString(response);
+                return String.valueOf(convertResponseToString(response));
 
             } catch (GoogleJsonResponseException e) {
                 Log.d(TAG, "failed to make API request because " + e.getContent());
@@ -141,28 +142,39 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
         }
     }
 
-    private static String convertResponseToString(BatchAnnotateImagesResponse response) {
+    private static List<String> convertResponseToString(BatchAnnotateImagesResponse response) {
         String message = "I found these things:\n\n";
+
+        List<String> annotations = new ArrayList<>();
 
         List<EntityAnnotation> labels = response.getResponses().get(0).getTextAnnotations();
         if (labels != null) {
-            message = labels.get(0).getDescription();
+            for(EntityAnnotation annotation:labels){
+                String description = annotation.getDescription();
+                if(description.equals("당근")||description.equals("고구마")){
+                    Log.d("cloud", description);
+                    annotations.add(description);
+                    Log.d("cloud", String.valueOf(annotation.getBoundingPoly()));
+                }
+            }
+
+            for(int i=0;i< annotations.size();i++){
+                addIngredient(String.valueOf(annotations.get(i)),"1");
+            }
 
         } else {
-            message = "nothing";
+            annotations.add("nothing");
         }
 
-        String pattern = "설탕";
+      return annotations;
 
-        Pattern compiledPattern = Pattern.compile(pattern);
-        Matcher matcher = compiledPattern.matcher(message);
+    }
 
-        if (matcher.find()) {
-            String extreactedText = matcher.group();
-            return extreactedText;
-        } else {
-            return "not found";
-        }
+    public static void addIngredient(String name, String count) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("ingredient_user");
+        databaseReference.child(name).setValue(new IngredientUser(name, count));
 
     }
 
@@ -217,12 +229,12 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
             add(annotateImageRequest);
         }});
 
+
         Vision.Images.Annotate annotateRequest =
                 vision.images().annotate(batchAnnotateImagesRequest);
 
         annotateRequest.setDisableGZipContent(true);
         Log.d(TAG, "created Cloud Vision request object, sending request");
-
         return annotateRequest;
     }
 }

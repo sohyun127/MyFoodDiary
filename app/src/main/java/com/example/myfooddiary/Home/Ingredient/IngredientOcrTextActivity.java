@@ -20,6 +20,7 @@ public class IngredientOcrTextActivity extends AppCompatActivity implements View
         binding = ActivityIngredientOcrTextBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+
         String result = getIntent().getStringExtra("text");
 
         binding.tvIngredientOcrText.setText(result);
