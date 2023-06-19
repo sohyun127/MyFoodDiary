@@ -64,6 +64,18 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getArguments() != null) {
+            date = getArguments().getString("day");
+            binding.tvRecordDetailTitle.setText("[" + date + "]");
+        }
+
+        setAdapter();
+    }
+
+    @Override
     public void onDestroyView() {
         binding = null;
         super.onDestroyView();
@@ -111,7 +123,6 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
                 Intent intent = new Intent(getActivity(),RecordAddActivity.class);
                 intent.putExtra("date",date);
                 startActivity(intent);
-                getActivity().finish();
         }
     }
 }

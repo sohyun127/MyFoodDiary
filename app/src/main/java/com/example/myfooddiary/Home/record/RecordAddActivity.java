@@ -20,7 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
-import com.example.myfooddiary.Home.MainActivity;
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.ActivityRecordAddBinding;
 import com.google.firebase.database.DatabaseReference;
@@ -133,8 +132,6 @@ public class RecordAddActivity extends AppCompatActivity implements View.OnClick
                 break;
             case R.id.btn_record_add_complete:
                 addRecord(getIntent().getStringExtra("date"));
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
                 finish();
                 break;
         }
