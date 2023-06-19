@@ -439,7 +439,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
     }
 
     private void updateTextureViewSize(int viewWidth, int viewHeight) {
-        mSurfaceView.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight - 100));
+        mSurfaceView.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight));
     }
 
 
