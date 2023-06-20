@@ -1,8 +1,13 @@
 package com.example.myfooddiary.Home.recipe;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -12,6 +17,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.myfooddiary.Home.Ingredient.IngredientUser;
+import com.example.myfooddiary.Home.MainActivity;
+import com.example.myfooddiary.Home.record.Record;
 import com.example.myfooddiary.databinding.ActivityRecipeDetailBinding;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -20,7 +27,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class RecipeDetailActivity extends AppCompatActivity {
 
@@ -30,6 +41,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private ArrayList<Recipe> arrayList;
     private DatabaseReference databaseReferenceUser;
+    private DatabaseReference databaseReferenceRecord;
+
 
 
     @Override
@@ -41,8 +54,47 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         setData();
         setClickEventOnToolBar();
+        setOnClickEventOnRecordButton();
 
     }
+
+    private void setOnClickEventOnRecordButton(){
+        binding.btnRecipeDetailComplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addRecord();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("fragmentToLoad","recordFragment");
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+
+    private void addRecord() {
+        Drawable image = binding.ivRecipeDetail.getDrawable();
+        String sImage = "";
+        Bitmap bitmap = ((BitmapDrawable) image).getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] foodImage = stream.toByteArray();
+
+        sImage = byteArrayToBinaryString(foodImage);
+
+        long now = System.currentTimeMillis();
+        DateFormat formatter = new SimpleDateFormat("yyyy년M월d일");
+        DateFormat timeFormatter = new SimpleDateFormat("h:mm a");
+        Date date = new Date(now);
+        String getDay = formatter.format(date);
+        String getTime = timeFormatter.format(date);
+
+        databaseReferenceRecord = database.getReference("record");
+        databaseReferenceRecord.child(getDay).push().setValue(new Record(getTime,
+                binding.tvRecipeTitle.getText().toString(), binding.tvRecipeKcal.getText().toString().
+                substring(0,binding.tvRecipeKcal.getText().toString().length()-4), sImage));
+    }
+
 
     private void setData() {
 
@@ -101,7 +153,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
         Glide.with(binding.getRoot()).load(arrayList.get(position).getUrl()).into(binding.ivRecipeDetail);
         binding.tvRecipeTitle.setText(arrayList.get(position).getName());
-        binding.tvRecipeKcal.setText(arrayList.get(position).getKcal());
+        binding.tvRecipeKcal.setText(arrayList.get(position).getKcal()+"kcal");
         binding.tvRecipeIngredient.setText(arrayList.get(position).getIngredient());
 
         if (!arrayList.get(position).getRecipe1().isBlank()) {
@@ -152,6 +204,25 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public static String byteArrayToBinaryString(byte[] b) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < b.length; ++i) {
+            sb.append(byteToBinaryString(b[i]));
+        }
+        return sb.toString();
+    }
+
+    public static String byteToBinaryString(byte n) {
+        StringBuilder sb = new StringBuilder("00000000");
+        for (int bit = 0; bit < 8; bit++) {
+            if (((n >> bit) & 1) > 0) {
+                sb.setCharAt(7 - bit, '1');
+            }
+        }
+        return sb.toString();
+    }
+
 
 
 }
