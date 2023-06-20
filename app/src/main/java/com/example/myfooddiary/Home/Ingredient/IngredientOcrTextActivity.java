@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfooddiary.Home.MainActivity;
 import com.example.myfooddiary.R;
@@ -19,12 +20,17 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 public class IngredientOcrTextActivity extends AppCompatActivity implements View.OnClickListener {
 
     private ActivityIngredientOcrTextBinding binding;
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private ArrayList<IngredientUser> userArrayList;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,7 +38,6 @@ public class IngredientOcrTextActivity extends AppCompatActivity implements View
         binding = ActivityIngredientOcrTextBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        binding.btnIngredientOcrTextEdit.setOnClickListener(this);
         binding.btnIngredientOcrTextComplete.setOnClickListener(this);
 
         setData();
@@ -44,20 +49,21 @@ public class IngredientOcrTextActivity extends AppCompatActivity implements View
     public void setData() {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("ingredient_ocr");
+        userArrayList = new ArrayList<>();
+        recyclerView = binding.rvIngredientOcrText;
+        recyclerView.setHasFixedSize(true);
 
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-
+                userArrayList.clear();
 
                 for (DataSnapshot snapshot : datasnapshot.getChildren()) {
                     IngredientUser ingredient = snapshot.getValue(IngredientUser.class);
-
-                    binding.tvIngredientOcrTextNameDetail.append(ingredient.getName() + "\n\n");
-                    binding.tvIngredientOcrTextCountDetail.append(ingredient.getCount() + "\n\n");
-
+                    userArrayList.add(ingredient);
                 }
 
+                adapter.notifyDataSetChanged();
 
             }
 
@@ -67,6 +73,13 @@ public class IngredientOcrTextActivity extends AppCompatActivity implements View
                 Toast.makeText(getApplicationContext(), "db 오류", Toast.LENGTH_SHORT).show();
             }
         });
+
+        adapter = new IngredientOcrTextAdapter(userArrayList, getApplicationContext(), new IngredientOcrTextAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+            }
+        });
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -81,4 +94,5 @@ public class IngredientOcrTextActivity extends AppCompatActivity implements View
         }
 
     }
+
 }
