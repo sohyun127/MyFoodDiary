@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfooddiary.Home.Ingredient.IngredientUser;
+import com.example.myfooddiary.Home.LoadingDialog;
 import com.example.myfooddiary.databinding.FragmentRecipeBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,6 +34,7 @@ public class RecipeFragment extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReferenceUser;
+    private LoadingDialog loadingDialog;
 
 
     @Override
@@ -56,7 +58,8 @@ public class RecipeFragment extends Fragment {
     }
 
     private void setAdapter() {
-
+        loadingDialog = new LoadingDialog(getContext());
+        loadingDialog.show();
 
         arrayList = new ArrayList<>();
 
@@ -93,6 +96,7 @@ public class RecipeFragment extends Fragment {
 
                         Log.d("tesssst", String.valueOf(arrayList));
                         adapter.notifyDataSetChanged();
+                        loadingDialog.dismiss();
                     }
 
                     @Override

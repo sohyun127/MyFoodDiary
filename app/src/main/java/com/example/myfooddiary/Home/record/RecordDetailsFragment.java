@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myfooddiary.Home.LoadingDialog;
 import com.example.myfooddiary.Home.User;
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.FragmentRecordDetailsBinding;
@@ -38,6 +39,7 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
     private DatabaseReference databaseReferenceUser;
     String date="0";
     int kcal=0;
+    private LoadingDialog loadingDialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +54,8 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadingDialog = new LoadingDialog(getContext());
+        loadingDialog.show();
 
     }
 
@@ -110,6 +114,8 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
                 }
                 Log.d("recordtest", String.valueOf(arrayList));
                 adapter.notifyDataSetChanged();
+                loadingDialog.dismiss();
+
             }
 
             @Override
@@ -124,6 +130,7 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
+
     }
 
     public void setInfo() {

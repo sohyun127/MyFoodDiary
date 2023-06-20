@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myfooddiary.Home.LoadingDialog;
 import com.example.myfooddiary.Home.MainActivity;
 import com.example.myfooddiary.databinding.ActivityIngredientAddDirectlyBinding;
 import com.google.firebase.FirebaseApp;
@@ -41,6 +42,7 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
 
     private EditText etSearch;
     private  IngredientAddDirectlyDialog dialog;
+    private LoadingDialog loadingDialog;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +124,9 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
 
     private void setAdapter() {
 
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.show();
+
         fullList = new ArrayList<>();
         searchList = new ArrayList<>();
 
@@ -145,6 +150,7 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
                     searchList.add(ingredient);
                 }
                 adapter.notifyDataSetChanged();
+                loadingDialog.dismiss();
             }
 
             @Override

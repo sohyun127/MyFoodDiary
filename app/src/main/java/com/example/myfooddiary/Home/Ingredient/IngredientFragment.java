@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myfooddiary.Home.LoadingDialog;
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.FragmentIngredientBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,6 +48,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
     private DatabaseReference databaseReference;
     private DatabaseReference databaseReferenceUser;
     private  IngredientDialog dialog;
+    private LoadingDialog loadingDialog;
 
 
 
@@ -94,6 +96,8 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
 
     private void setAdapter(int typeId){
 
+        loadingDialog = new LoadingDialog(getContext());
+        loadingDialog.show();
         recyclerView = binding.rvIngredient;
         recyclerView.setHasFixedSize(true);
         arrayList = new ArrayList<>();
@@ -136,6 +140,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
 
 
                         adapter.notifyDataSetChanged();
+                            loadingDialog.dismiss();
                     }
 
                     @Override

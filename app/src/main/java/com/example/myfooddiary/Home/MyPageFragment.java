@@ -24,6 +24,7 @@ public class MyPageFragment extends Fragment {
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private LoadingDialog loadingDialog;
 
     @Nullable
     @Override
@@ -36,6 +37,8 @@ public class MyPageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadingDialog = new LoadingDialog(getContext());
+        loadingDialog.show();
         setInfo();
 
     }
@@ -62,15 +65,18 @@ public class MyPageFragment extends Fragment {
                     binding.tvMyPageWeight.setText("Weight.   "+user.getWeight()+"kg");
                     binding.tvMyPageHeight.setText("Height.   "+user.getHeight()+"cm");
                     binding.tvMyPageKcal.setText("Recommended calories per day.   "+user.getKcal()+"kcal");
+                    loadingDialog.dismiss();
                 }
 
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.d("db error", error.toString());
                 Toast.makeText(getContext(), "db 오류", Toast.LENGTH_SHORT).show();
             }
         });
+
 
     }
 }

@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.myfooddiary.Home.Ingredient.IngredientUser;
+import com.example.myfooddiary.Home.LoadingDialog;
 import com.example.myfooddiary.Home.MainActivity;
 import com.example.myfooddiary.Home.record.Record;
 import com.example.myfooddiary.databinding.ActivityRecipeDetailBinding;
@@ -42,6 +43,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private ArrayList<Recipe> arrayList;
     private DatabaseReference databaseReferenceUser;
     private DatabaseReference databaseReferenceRecord;
+    private LoadingDialog loadingDialog;
 
 
 
@@ -106,7 +108,8 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
 
     private void setData() {
-
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.show();
         arrayList = new ArrayList<>();
         database = FirebaseDatabase.getInstance();
 
@@ -138,6 +141,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
                         }
 
                         setView();
+                        loadingDialog.dismiss();
 
                     }
 
