@@ -4,164 +4,253 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home.recipe.RecordAddActivity">
+    tools:context=".Home.record.RecordAddActivity">
 
-    <TextView
-        android:id="@+id/foodname"
-        android:layout_width="wrap_content"
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_record_add_tool_Bar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:text="음식명"
-       />
+        app:title=" " />
 
-    <EditText
-        android:id="@+id/et_foodname"
+    <TextView
+        android:id="@+id/tv_record_add_sub_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/et_siginup_rectangle"
-        android:inputType="text"
-        android:minHeight="48dp"
-        android:paddingHorizontal="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/foodname"
-        android:hint="음식명 입력"/>
+        android:gravity="center"
+        android:text="[Diet Record]"
+        android:textAppearance="@style/TextAppearance.AppCompat.title1"
+        app:layout_constraintTop_toBottomOf="@id/tb_record_add_tool_Bar" />
+
 
     <TextView
-        android:id="@+id/classification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_foodname"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:text="분류"
-        />
-
-    <Button
-        android:id="@+id/bt_morning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/classification"
-        android:layout_marginTop="10dp"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:clickable="true"
-        android:text="아침"/>
-
-    <Button
-        android:id="@+id/bt_lunch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/bt_morning"
-        app:layout_constraintTop_toBottomOf="@id/classification"
-        android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="6dp"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:clickable="true"
-        android:text="점심"/>
-
-    <Button
-        android:id="@+id/bt_dinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/bt_lunch"
-        app:layout_constraintTop_toBottomOf="@id/classification"
-        android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="6dp"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:clickable="true"
-        android:text="저녁"/>
-
-    <Button
-        android:id="@+id/bt_snack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/bt_dinner"
-        app:layout_constraintTop_toBottomOf="@id/classification"
-        android:layout_marginTop="10dp"
-        android:layout_marginHorizontal="6dp"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:clickable="true"
-        android:text="간식"/>
-
-    <TextView
-        android:id="@+id/calories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bt_morning"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:text="칼로리"
-        />
-
-    <EditText
-        android:id="@+id/et_calories"
+        android:id="@+id/tv_record_add_line"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/et_siginup_rectangle"
-        android:inputType="number"
-        android:minHeight="48dp"
-        android:paddingHorizontal="15dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calories"
-        android:hint="칼로리 입력"/>
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="----------------------------------------------------"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_add_sub_title" />
+
 
     <TextView
-        android:id="@+id/picture"
+        android:id="@+id/tv_record_add_food"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_calories"
-        android:layout_marginHorizontal="20dp"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:text="사진"
-        />
+        android:text="[FOOD]"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_add_line" />
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_record_add_food"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_add_food">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_record_add_food"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="음식 이름을 입력하세요."
+            android:inputType="text"
+            android:paddingHorizontal="15dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+            tools:ignore="TouchTargetSizeCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tv_record_add_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:text="[TIME]"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_record_add_food" />
+
+    <CheckBox
+        android:id="@+id/check_record_add_morning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:checked="true"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_add_time"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="아침"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintBottom_toBottomOf="@id/check_record_add_morning"
+        app:layout_constraintStart_toEndOf="@id/check_record_add_morning"
+        app:layout_constraintTop_toTopOf="@id/check_record_add_morning" />
+
+
+    <CheckBox
+        android:id="@+id/check_record_add_launch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="10dp"
+        app:layout_constraintStart_toEndOf="@id/check_record_add_morning"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_add_time"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="점심"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintBottom_toBottomOf="@id/check_record_add_launch"
+        app:layout_constraintStart_toEndOf="@id/check_record_add_launch"
+        app:layout_constraintTop_toTopOf="@id/check_record_add_launch" />
+
+
+    <CheckBox
+        android:id="@+id/check_record_add_dinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="10dp"
+        app:layout_constraintStart_toEndOf="@id/check_record_add_launch"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_add_time"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="저녁"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintBottom_toBottomOf="@id/check_record_add_dinner"
+        app:layout_constraintStart_toEndOf="@id/check_record_add_dinner"
+        app:layout_constraintTop_toTopOf="@id/check_record_add_dinner" />
+
+    <CheckBox
+        android:id="@+id/check_record_add_snack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:minWidth="0dp"
+        android:minHeight="0dp"
+        android:padding="10dp"
+        app:layout_constraintStart_toEndOf="@id/check_record_add_dinner"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_add_time"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="간식"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintBottom_toBottomOf="@id/check_record_add_snack"
+        app:layout_constraintStart_toEndOf="@id/check_record_add_snack"
+        app:layout_constraintTop_toTopOf="@id/check_record_add_snack" />
+
+
+    <TextView
+        android:id="@+id/tv_record_add_kcal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:text="[KCAL]"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/check_record_add_morning" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_record_add_kcal"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_add_kcal">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_record_add_kcal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="칼로리를 입력하세요.(kcal)"
+            android:inputType="number"
+            android:paddingHorizontal="15dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+            tools:ignore="TouchTargetSizeCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <TextView
+        android:id="@+id/tv_record_add_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:text="[PHOTO]"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_record_add_kcal" />
 
     <ImageView
-        android:id="@+id/img_picture"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:src="@drawable/et_siginup_rectangle"
+        android:id="@+id/iv_record_add"
+        android:layout_width="0dp"
+        android:layout_height="80dp"
+        android:clipToOutline="true"
+        android:scaleType="centerCrop"
+        android:background="@drawable/rectangle_gray7_radius_6"
+        android:layout_marginStart="50dp"
+        android:src="@drawable/ic_record_food"
+        android:layout_marginTop="10dp"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/picture"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="10dp"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_record_add_photo" />
 
-
-    <Button
-        android:id="@+id/bt_add"
+    <TextView
+        android:id="@+id/tv_record_add_line_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:paddingHorizontal="15dp"
-        android:minHeight="60dp"
-        android:layout_marginBottom="50dp"
-        android:layout_marginHorizontal="30dp"
-        android:textColor="#000000"
-        android:textSize="18sp"
-        android:clickable="true"
-        android:text="기록하기"/>
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="========================================"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintTop_toBottomOf="@id/iv_record_add" />
 
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_record_add_complete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/rectangle_radius_8"
+        android:paddingVertical="10dp"
+        android:text="기록하기"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_add_line_2" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.example.myfooddiary.Home;
+package com.example.myfooddiary.Home.record;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -11,10 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myfooddiary.R;
-import com.example.myfooddiary.RecordDetailsFragment;
 import com.example.myfooddiary.databinding.FragmentRecordBinding;
 
 import java.text.DateFormat;
@@ -49,8 +48,6 @@ public class RecordFragment extends Fragment {
         Date date = new Date(calendarView.getDate());
         today.setText(formatter.format(date));
 
-        Fragment recordDetailsFragment = new RecordDetailsFragment();
-
         //날짜 클릭 시 해당 날짜로  today 텍스트 변경
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -59,26 +56,21 @@ public class RecordFragment extends Fragment {
                 day = year + "년" + (month + 1) + "월" + dayOfMonth + "일";
                 today.setText(day);
 
-                Log.d("send",today.toString());
+                Bundle bundle = new Bundle();
+                bundle.putString("day", day);
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 Fragment fragment = new RecordDetailsFragment();
-                Bundle args = new Bundle();
-                args.putString("today", String.valueOf(today));
-                fragment.setArguments(args);
+                fragment.setArguments(bundle);
+                transaction.replace(R.id.fcv_main,fragment);
+                transaction.commit();
+                Log.d("send",day);
 
 
-                changeFragment(recordDetailsFragment);
+
             }
 
         });
     }
-
-
-    private void changeFragment(Fragment fragment) {
-
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fcv_main, fragment).commit();
-
-    }
-
 
 
     @Override

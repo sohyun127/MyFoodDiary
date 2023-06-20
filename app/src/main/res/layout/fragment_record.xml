@@ -7,31 +7,24 @@
 
     <TextView
         android:id="@+id/today"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="   yyyy년mm월dd일   "
-        android:textSize="30sp"
-        android:layout_above="@+id/calendarView"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/et_siginup_rectangle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.157"/>
-
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.title1"
+        android:layout_marginTop="70dp"
+        android:text="[yyyy년mm월dd일]"
+       />
 
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="180dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,113 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingHorizontal="20dp"
-    tools:context=".RecordDetailsFragment">
+    tools:context=".Home.record.RecordDetailsFragment">
 
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nsv_record_information"
+    <TextView
+        android:id="@+id/tv_record_detail_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/record_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="20dp"
-                android:text="yyyy년mm월dd"
-                android:textSize="25sp"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <TextView
-                android:id="@+id/calorie"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/et_siginup_rectangle"
-                android:foregroundGravity="center_horizontal"
-                android:text="섭취 칼로리 / 목표 칼로리"
-                android:textSize="25sp"
-                android:textAlignment="center"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/record_date"/>
-
-            <ImageView
-                android:id="@+id/picture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="10dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/calorie"
-                app:srcCompat="@drawable/ic_launcher_foreground" />
-
-            <TextView
-                android:id="@+id/food_time"
-                android:layout_width="38dp"
-                android:layout_height="34dp"
-                android:layout_marginStart="20dp"
-                android:drawablePadding="20dp"
-                android:text="시간"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@id/picture"
-                app:layout_constraintTop_toTopOf="@id/picture" />
-
-            <TextView
-                android:id="@+id/food_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:drawablePadding="20dp"
-                android:text="음식명"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@id/picture"
-                app:layout_constraintTop_toBottomOf="@id/food_time" />
-
-            <TextView
-                android:id="@+id/food_calorie"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:drawablePadding="20dp"
-                android:text="칼로리"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@id/picture"
-                app:layout_constraintTop_toBottomOf="@id/food_name" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="[YYYY.MM.DD]"
+        android:textAppearance="@style/TextAppearance.AppCompat.title1"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
+    <ImageView
+        android:id="@+id/iv_record_detail_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_line"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_detail_title" />
+
+
+    <TextView
+        android:id="@+id/tv_record_detail_kcal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="섭취 칼로리 / 목표 칼로리"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintTop_toBottomOf="@id/iv_record_detail_line" />
+
+
+    <TextView
+        android:id="@+id/tv_record_detail_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="----------------------------------------------------"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_detail_kcal" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_record_detail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/tv_record_detail_line_2"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_detail_line"
+        tools:listitem="@layout/item_record"/>
+
+
+    <TextView
+        android:id="@+id/tv_record_detail_line_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="========================================"
+        android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
+        app:layout_constraintBottom_toTopOf="@id/iv_record_detail_logo" />
+
+
+    <TextView
+        android:id="@+id/tv_record_detial_total"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Total:"
+        android:textAppearance="@style/TextAppearance.AppCompat.title2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_detail_line_2" />
+
+
+    <TextView
+        android:id="@+id/tv_record_detail_total_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:text="+100kcal"
+        android:textAppearance="@style/TextAppearance.AppCompat.title2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_record_detail_line_2" />
+
+
+    <ImageView
+        android:id="@+id/iv_record_detail_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/img_logo"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/new_food"
+        android:id="@+id/fab_record_detail_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="300dp"
-        android:layout_marginTop="480dp"
+        android:layout_marginBottom="10dp"
         android:clickable="true"
         android:contentDescription="addFab"
         android:focusable="true"
         android:src="@drawable/ic_add"
         android:visibility="visible"
-        app:backgroundTint="#FFF7B8"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:backgroundTint="@color/yellow_sub"
+        app:layout_constraintBottom_toTopOf="@id/tv_record_detail_total_detail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:layout_constraintStart_toStartOf="parent" />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

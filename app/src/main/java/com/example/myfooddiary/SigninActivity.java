@@ -25,7 +25,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
 
         it = getIntent();
 
-        TextView tvSignUp = binding.tvSigninSignup;
+        TextView tvSignUp = binding.btnSigninSignup;
         tvSignUp.setOnClickListener(this);
 
         Button btnLogin = binding.btnSigninLogin;
@@ -36,7 +36,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_signin_signup:
+            case R.id.btn_signin_signup:
                 Intent signup = new Intent(this, SignupActivity.class);
                 startActivity(signup); //회원가입 페이지로 이동
                 finish();
@@ -64,7 +64,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
         String id = it.getStringExtra("id");
         String pw = it.getStringExtra("pw");
 
-        if (binding.etSigninId.getText().toString().equals(id)&& binding.etSigninPw.getText().toString().equals(pw)) {
+        if (binding.etSigninId.getText().toString().equals(id) && binding.etSigninPw.getText().toString().equals(pw)) {
             return true;
         } else {
             return false;

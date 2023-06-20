@@ -7,7 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfooddiary.BuildConfig;
@@ -27,14 +29,17 @@ import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class IngredientOcrImageActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -47,6 +52,13 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
     private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
     private static final int MAX_LABEL_RESULTS = 10;
 
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+
+    private static List<String> ingredientLabel;
+    private static List<String> cow=List.of("살치","채끝","부채","안창","토시","치마","한우","안심","스테이크","차돌박이","양지","제비추리","소고기","등심");
+    private static List<String> fork = List.of("돼지","삼겹살","대패","목살","항정살","가브리살");
+
     Bitmap bitmap;
 
 
@@ -56,9 +68,42 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
         binding = ActivityIngredientOcrImageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("ingredient_ocr");
+        databaseReference.removeValue();
+
         binding.btnIngredientOcrImageCancel.setOnClickListener(this);
         binding.btnIngredientOcrImageComplete.setOnClickListener(this);
         setImage();
+        setLabel();
+    }
+
+    private void setLabel(){
+
+        ingredientLabel = new ArrayList<>();
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("ingredient");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                ingredientLabel.clear();
+
+                for (DataSnapshot snapshot : datasnapshot.getChildren()) {
+                    Ingredient ingredient = snapshot.getValue(Ingredient.class);
+
+                    ingredientLabel.add(ingredient.getName());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("db error", error.toString());
+                Toast.makeText(getApplicationContext(), "db 오류", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
     }
 
     private void setImage() {
@@ -116,7 +161,7 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
             try {
                 Log.d(TAG, "created Cloud Vision request object, sending request");
                 BatchAnnotateImagesResponse response = mRequest.execute();
-                return convertResponseToString(response);
+                return String.valueOf(convertResponseToString(response));
 
             } catch (GoogleJsonResponseException e) {
                 Log.d(TAG, "failed to make API request because " + e.getContent());
@@ -141,30 +186,78 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
         }
     }
 
-    private static String convertResponseToString(BatchAnnotateImagesResponse response) {
+    private static List<String> convertResponseToString(BatchAnnotateImagesResponse response) {
         String message = "I found these things:\n\n";
 
+        List<String> annotations = new ArrayList<>();
+        List<String> position = new ArrayList<>();
+        List<String> food = new ArrayList<>();
+        int countPosition = 0;
+
         List<EntityAnnotation> labels = response.getResponses().get(0).getTextAnnotations();
+
+
         if (labels != null) {
-            message = labels.get(0).getDescription();
+            for (int i = 1; i < labels.size(); i++) { // i의 초기값을 1로 변경하여 첫 번째 요소를 건너뜁니다
+                EntityAnnotation annotation = labels.get(i);
+                String description = annotation.getDescription();
 
+                if(description.equals("수량")){
+                    countPosition=annotation.getBoundingPoly().getVertices().get(0).getX();
+                    Log.d("countPosition", String.valueOf(annotation.getBoundingPoly().getVertices().get(0).getX()));
+                }
+
+                for (int j = 0; j < ingredientLabel.size(); j++) {
+                    if (description.contains(ingredientLabel.get(j))) {
+                        position.add(String.valueOf(annotation.getBoundingPoly().getVertices().get(0).getY()));
+                        food.add(ingredientLabel.get(j));
+                    }
+               }
+
+                for(int j =0;j<position.size();j++ ){
+
+                    if(annotation.getBoundingPoly().getVertices().get(0).getY()>Integer.valueOf(position.get(j))-20&&
+                            annotation.getBoundingPoly().getVertices().get(0).getY()<Integer.valueOf(position.get(j))+50){
+
+                        if(annotation.getBoundingPoly().getVertices().get(0).getX()>countPosition&&
+                                annotation.getBoundingPoly().getVertices().get(0).getX()<countPosition+40
+                        ){
+                            addOcr(food.get(j),description);
+                            addIngredient(food.get(j),description);
+                            Log.d(String.valueOf(food.get(j)),description);
+                            Log.d(String.valueOf(food.get(j)), "x:"+ annotation.getBoundingPoly().getVertices().get(0).getX());
+
+                        }
+                    }
+
+                }
+
+            }
         } else {
-            message = "nothing";
+            annotations.add("nothing");
         }
 
-        String pattern = "설탕";
 
-        Pattern compiledPattern = Pattern.compile(pattern);
-        Matcher matcher = compiledPattern.matcher(message);
-
-        if (matcher.find()) {
-            String extreactedText = matcher.group();
-            return extreactedText;
-        } else {
-            return "not found";
-        }
+        return annotations;
 
     }
+
+    public static void addIngredient(String name, String count) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("ingredient_user");
+        databaseReference.child(name).setValue(new IngredientUser(name, count));
+
+    }
+
+    public static void addOcr(String name, String count){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("ingredient_ocr");
+        databaseReference.child(name).setValue(new IngredientUser(name, count));
+
+    }
+
 
 
     private Vision.Images.Annotate prepareAnnotationRequest(Bitmap bitmap) throws IOException {
@@ -217,12 +310,12 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
             add(annotateImageRequest);
         }});
 
+
         Vision.Images.Annotate annotateRequest =
                 vision.images().annotate(batchAnnotateImagesRequest);
 
         annotateRequest.setDisableGZipContent(true);
         Log.d(TAG, "created Cloud Vision request object, sending request");
-
         return annotateRequest;
     }
 }

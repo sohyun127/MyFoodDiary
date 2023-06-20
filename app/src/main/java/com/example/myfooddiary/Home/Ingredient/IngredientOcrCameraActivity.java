@@ -35,6 +35,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Size;
 import android.util.SparseIntArray;
+import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -48,8 +49,10 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
+import com.example.myfooddiary.Home.MainActivity;
 import com.example.myfooddiary.databinding.ActivityIngredientOcrCameraBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -98,6 +101,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
         binding = ActivityIngredientOcrCameraBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        setClickEventOnToolBar();
 
         intentImage = new Intent(this, IngredientOcrImageActivity.class);
 
@@ -147,6 +151,22 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mSensorManager.unregisterListener(deviceOrientation.getEventListener());
+    }
+
+    private void setClickEventOnToolBar() {
+        Toolbar toolbar = binding.tbIngredientOcrToolBar;
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void initSurfaceView() {
@@ -419,7 +439,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
     }
 
     private void updateTextureViewSize(int viewWidth, int viewHeight) {
-        mSurfaceView.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight - 100));
+        mSurfaceView.setLayoutParams(new FrameLayout.LayoutParams(viewWidth, viewHeight));
     }
 
 

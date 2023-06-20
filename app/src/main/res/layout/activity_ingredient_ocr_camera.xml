@@ -4,15 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <SurfaceView
         android:id="@+id/surface_view_ingredient_ocr_camera"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="60dp"
         android:layout_marginBottom="30dp"
         app:layout_constraintBottom_toTopOf="@id/fab_ocr_camera"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tb_ingredient_ocr_tool_Bar" />
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/tb_ingredient_ocr_tool_Bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title=" " />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -22,7 +31,7 @@
         android:layout_marginBottom="50dp"
         android:clickable="true"
         android:contentDescription="camera"
-        app:backgroundTint="#FFF7B8"
+        app:backgroundTint="@color/yellow_sub"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +45,7 @@
         android:layout_marginBottom="50dp"
         android:clickable="true"
         android:contentDescription="gallery"
-        app:backgroundTint="#FFF7B8"
+        app:backgroundTint="@color/yellow_sub"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_gallery" />
