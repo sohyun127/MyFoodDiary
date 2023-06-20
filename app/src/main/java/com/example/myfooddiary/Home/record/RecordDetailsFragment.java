@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myfooddiary.Home.User;
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.FragmentRecordDetailsBinding;
 import com.google.firebase.database.DataSnapshot;
@@ -34,6 +35,7 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     String date="0";
+    int kcal=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
         }
 
         setAdapter();
+        setInfo();
 
     }
 
@@ -74,6 +77,7 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
         }
 
         setAdapter();
+        setInfo();
     }
 
     @Override
@@ -95,10 +99,11 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 arrayList.clear();
+                kcal=0;
 
                 for (DataSnapshot snapshot: datasnapshot.getChildren()){
                     Record record = snapshot.getValue(Record.class);
-
+                    kcal= Integer.valueOf(record.getKcal()) + kcal;
                     arrayList.add(record);
                 }
                 Log.d("recordtest", String.valueOf(arrayList));
@@ -116,6 +121,33 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
         recyclerView.setAdapter(adapter);
 
     }
+
+    public void setInfo() {
+        String userId = getActivity().getIntent().getStringExtra("user_id");
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("user_info").child(userId);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                if (datasnapshot.exists()) {
+                    User user = datasnapshot.getValue(User.class);
+                    int result = Integer.parseInt(String.valueOf(kcal))-user.getKcal();
+                    binding.tvRecordDetailKcal.setText(kcal+"(섭취 칼로리)" + " / " + user.getKcal()+"(권장 칼로리)" + " kcal");
+                    binding.tvRecordDetailTotalDetail.setText(result + "kcal");
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("db error", error.toString());
+                Toast.makeText(getContext(), "db 오류", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
 
     @Override
     public void onClick(View v) {

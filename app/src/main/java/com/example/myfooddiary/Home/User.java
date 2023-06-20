@@ -9,13 +9,13 @@ public class User {
     private String birth;
     private String height;
     private String weight;
-    private String kcal;
+    private int kcal;
 
     public User(){
 
     }
 
-    public User(String id, String pw, String nickName, String gender, String birth, String height, String weight,String kcal){
+    public User(String id, String pw, String nickName, String gender, String birth, String height, String weight,int kcal){
         this.id = id;
         this.pw = pw;
         this.nickName = nickName;
@@ -34,11 +34,11 @@ public class User {
     public String getNickName(){return nickName;}
     public String getWeight(){return weight;}
 
-    public String getKcal() {
+    public int getKcal() {
         return kcal;
     }
 
-    public void setKcal(String kcal) {
+    public void setKcal(int kcal) {
         this.kcal = kcal;
     }
 

@@ -83,7 +83,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     public void saveData() {
         int height = Integer.parseInt(binding.etSignupHeight.getText().toString());
-        String kcal = String.valueOf((height - 100) * 0.9 * 30);
+        int kcal = (int) ((height - 100) * 0.9 * 30);
         String gender;
         if (binding.checkSignupMen.isChecked()) {
             gender = "남성";

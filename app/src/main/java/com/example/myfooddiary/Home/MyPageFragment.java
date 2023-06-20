@@ -59,7 +59,7 @@ public class MyPageFragment extends Fragment {
                     binding.tvMyPageNickname.setText("Nickname.   "+user.getNickName());
                     binding.tvMyPageGender.setText("Gender.   "+user.getGender());
                     binding.tvMyPageBirth.setText("Birth.   "+user.getBirth());
-                    binding.tvMyPageWeight.setText("Weight.   "+user.getWeight()+"kc");
+                    binding.tvMyPageWeight.setText("Weight.   "+user.getWeight()+"kg");
                     binding.tvMyPageHeight.setText("Height.   "+user.getHeight()+"cm");
                     binding.tvMyPageKcal.setText("Recommended calories per day.   "+user.getKcal()+"kcal");
                 }
