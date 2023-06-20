@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myfooddiary.Home.Ingredient.IngredientUser;
 import com.example.myfooddiary.databinding.FragmentRecipeBinding;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +32,7 @@ public class RecipeFragment extends Fragment {
     private RecyclerView recyclerView;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceUser;
 
 
     @Override
@@ -64,26 +66,45 @@ public class RecipeFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
 
         databaseReference = database.getReference("recipe");
+        databaseReferenceUser = database.getReference("ingredient_user");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                arrayList.clear();
+                databaseReferenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshotUser) {
+                        arrayList.clear();
 
-                for (DataSnapshot snapshot : datasnapshot.getChildren()) {
-                    Recipe recipe = snapshot.getValue(Recipe.class);
+                        for (DataSnapshot snapshot : datasnapshot.getChildren()) {
+                            Recipe recipe = snapshot.getValue(Recipe.class);
 
-                    arrayList.add(recipe);
+                            for (DataSnapshot snapshot2 : snapshotUser.getChildren()) {
+                                IngredientUser ingredientUser = snapshot2.getValue(IngredientUser.class);
 
-                }
+                                if (recipe.getMainIngredient().contains(ingredientUser.getName())) {
 
-                Log.d("tesssst", String.valueOf(arrayList));
-                adapter.notifyDataSetChanged();
+                                    arrayList.add(recipe);
+                                    break;
+                                }
+
+                            }
+
+                        }
+
+                        Log.d("tesssst", String.valueOf(arrayList));
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.d("db error", error.toString());
+                        Toast.makeText(getContext(), "db 오류", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("db error", error.toString());
-                Toast.makeText(getContext(), "db 오류", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -93,7 +114,7 @@ public class RecipeFragment extends Fragment {
                 Log.d("클릭", String.valueOf(arrayList.get(position).getName()));
                 Log.d("클릭", String.valueOf(position));
                 Intent intent = new Intent(getContext(), RecipeDetailActivity.class);
-                intent.putExtra("id",position);
+                intent.putExtra("id", position);
                 startActivity(intent);
             }
         });
