@@ -81,18 +81,21 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         return super.onOptionsItemSelected(item);
     }
 
-    public void saveData(){
+    public void saveData() {
+        int height = Integer.parseInt(binding.etSignupHeight.getText().toString());
+        String kcal = String.valueOf((height - 100) * 0.9 * 30);
         String gender;
-        if(binding.checkSignupMen.isChecked()){
-            gender="남성";
-        }else {
-            gender="여성";
+        if (binding.checkSignupMen.isChecked()) {
+            gender = "남성";
+        } else {
+            gender = "여성";
         }
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("user_info");
         databaseReference.child(binding.etSignupId.getText().toString()).setValue(new User(binding.etSignupId.getText().toString(),
-                binding.etSignupPw.getText().toString(),binding.etSignupNickname.getText().toString(),gender,binding.etSignupBirth.getText().toString(),
-                binding.etSignupHeight.getText().toString(),binding.etSignupWeight.getText().toString()));
+                binding.etSignupPw.getText().toString(), binding.etSignupNickname.getText().toString(), gender, binding.etSignupBirth.getText().toString(),
+                binding.etSignupHeight.getText().toString(), binding.etSignupWeight.getText().toString(), kcal
+        ));
 
 
     }

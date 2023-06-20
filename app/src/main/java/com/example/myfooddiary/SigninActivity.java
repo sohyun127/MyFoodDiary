@@ -67,7 +67,6 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("user_info");
-        boolean check = false;
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
@@ -78,6 +77,7 @@ public class SigninActivity extends AppCompatActivity implements View.OnClickLis
                     if(binding.etSigninId.getText().toString().equals(user.getId())&&binding.etSigninPw.getText().toString().equals(user.getPw())){
                         Intent main = new Intent(getApplicationContext(), MainActivity.class);
                         Snackbar.make(binding.getRoot(), "로그인에 성공했습니다.", Snackbar.LENGTH_SHORT).show();
+                        main.putExtra("user_id",user.getId());
                         startActivity(main);
                         finish();
                         break;
