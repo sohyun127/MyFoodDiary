@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfooddiary.Home.User;
@@ -121,6 +122,8 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
         adapter = new RecordAdapter(arrayList,getContext());
         recyclerView.setAdapter(adapter);
 
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
     }
 
     public void setInfo() {
@@ -158,5 +161,27 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
                 intent.putExtra("date",date);
                 startActivity(intent);
         }
+    }
+
+
+    ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            final int position = viewHolder.getAdapterPosition();
+            removeData(position);
+            arrayList.remove(position);
+            adapter.notifyItemRemoved(position);
+        }
+    };
+
+    private void removeData(int position) {
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("record");
+        databaseReference.child(date).child(arrayList.get(position).getFood()).removeValue();
     }
 }
