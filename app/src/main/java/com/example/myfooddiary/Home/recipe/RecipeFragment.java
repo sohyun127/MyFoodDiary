@@ -115,6 +115,7 @@ public class RecipeFragment extends Fragment {
                 Log.d("클릭", String.valueOf(position));
                 Intent intent = new Intent(getContext(), RecipeDetailActivity.class);
                 intent.putExtra("id", position);
+                intent.putExtra("user_id",getActivity().getIntent().getStringExtra("user_id"));
                 startActivity(intent);
             }
         });

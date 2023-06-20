@@ -65,10 +65,19 @@ public class RecipeDetailActivity extends AppCompatActivity {
                 addRecord();
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("fragmentToLoad","recordFragment");
+                removeData();
+                intent.putExtra("user_id",getIntent().getStringExtra("user_id"));
                 startActivity(intent);
                 finish();
             }
         });
+    }
+
+    private void removeData() {
+        int position = getIntent().getIntExtra("id", 0);
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("ingredient_user");
+        databaseReference.child(arrayList.get(position).getMainIngredient()).removeValue();
     }
 
 

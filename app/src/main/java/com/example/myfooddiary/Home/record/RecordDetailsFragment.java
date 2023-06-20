@@ -34,6 +34,7 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private DatabaseReference databaseReferenceUser;
     String date="0";
     int kcal=0;
 
@@ -124,9 +125,9 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
 
     public void setInfo() {
         String userId = getActivity().getIntent().getStringExtra("user_id");
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("user_info").child(userId);
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        databaseReferenceUser = database.getReference("user_info").child(userId);
+        databaseReferenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
                 if (datasnapshot.exists()) {
