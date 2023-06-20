@@ -228,7 +228,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="YYYY . MM . DD"
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     android:paddingHorizontal="15dp"
                     android:textAppearance="@style/TextAppearance.AppCompat.sub_title"
                     tools:ignore="TouchTargetSizeCheck" />
