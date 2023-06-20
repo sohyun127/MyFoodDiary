@@ -7,7 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfooddiary.BuildConfig;
@@ -27,8 +29,11 @@ import com.google.api.services.vision.v1.model.BatchAnnotateImagesResponse;
 import com.google.api.services.vision.v1.model.EntityAnnotation;
 import com.google.api.services.vision.v1.model.Feature;
 import com.google.api.services.vision.v1.model.Image;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -46,7 +51,11 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
     private static final String ANDROID_CERT_HEADER = "X-Android-Cert";
     private static final String ANDROID_PACKAGE_HEADER = "X-Android-Package";
     private static final int MAX_LABEL_RESULTS = 10;
-    private static List<String> ingredient= List.of("호박","당근","고구마","버섯","딸기","사과","설탕","고추","고추장","파","바나나");
+
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+
+    private static List<String> ingredientLabel;
     private static List<String> cow=List.of("살치","채끝","부채","안창","토시","치마","한우","안심","스테이크","차돌박이","양지","제비추리","소고기","등심");
     private static List<String> fork = List.of("돼지","삼겹살","대패","목살","항정살","가브리살");
 
@@ -66,7 +75,33 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
         binding.btnIngredientOcrImageCancel.setOnClickListener(this);
         binding.btnIngredientOcrImageComplete.setOnClickListener(this);
         setImage();
+        setLabel();
+    }
 
+    private void setLabel(){
+
+        ingredientLabel = new ArrayList<>();
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference("ingredient");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot datasnapshot) {
+                ingredientLabel.clear();
+
+                for (DataSnapshot snapshot : datasnapshot.getChildren()) {
+                    Ingredient ingredient = snapshot.getValue(Ingredient.class);
+
+                    ingredientLabel.add(ingredient.getName());
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("db error", error.toString());
+                Toast.makeText(getApplicationContext(), "db 오류", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
     }
@@ -167,25 +202,25 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
                 EntityAnnotation annotation = labels.get(i);
                 String description = annotation.getDescription();
 
-                for (int j = 0; j < ingredient.size(); j++) {
-                    if (description.contains(ingredient.get(j))) {
-                        position.add(String.valueOf(annotation.getBoundingPoly().getVertices().get(0).getY()));
-                        food.add(ingredient.get(j));
-                    }
+                if(description.equals("수량")){
+                    countPosition=annotation.getBoundingPoly().getVertices().get(0).getX();
+                    Log.d("countPosition", String.valueOf(annotation.getBoundingPoly().getVertices().get(0).getX()));
+                }
 
-                    if(description.equals("수량")){
-                        countPosition=annotation.getBoundingPoly().getVertices().get(0).getX();
-                        Log.d("cloud", String.valueOf(annotation.getBoundingPoly().getVertices().get(0).getX()));
+                for (int j = 0; j < ingredientLabel.size(); j++) {
+                    if (description.contains(ingredientLabel.get(j))) {
+                        position.add(String.valueOf(annotation.getBoundingPoly().getVertices().get(0).getY()));
+                        food.add(ingredientLabel.get(j));
                     }
                }
 
                 for(int j =0;j<position.size();j++ ){
 
-                    if(annotation.getBoundingPoly().getVertices().get(0).getY()>Integer.valueOf(position.get(j))-10&&
-                            annotation.getBoundingPoly().getVertices().get(0).getY()<Integer.valueOf(position.get(j))+10){
+                    if(annotation.getBoundingPoly().getVertices().get(0).getY()>Integer.valueOf(position.get(j))-20&&
+                            annotation.getBoundingPoly().getVertices().get(0).getY()<Integer.valueOf(position.get(j))+50){
 
-                        if(annotation.getBoundingPoly().getVertices().get(j).getX()>countPosition&&
-                                annotation.getBoundingPoly().getVertices().get(j).getX()<countPosition+30
+                        if(annotation.getBoundingPoly().getVertices().get(0).getX()>countPosition&&
+                                annotation.getBoundingPoly().getVertices().get(0).getX()<countPosition+40
                         ){
                             addOcr(food.get(j),description);
                             addIngredient(food.get(j),description);
