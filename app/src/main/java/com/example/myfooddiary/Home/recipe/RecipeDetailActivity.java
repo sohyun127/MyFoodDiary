@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
+import com.example.myfooddiary.Home.Ingredient.IngredientUser;
 import com.example.myfooddiary.databinding.ActivityRecipeDetailBinding;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +29,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private ArrayList<Recipe> arrayList;
+    private DatabaseReference databaseReferenceUser;
 
 
     @Override
@@ -49,30 +51,47 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
 
         databaseReference = database.getReference("recipe");
+        databaseReferenceUser = database.getReference("ingredient_user");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {
-                arrayList.clear();
+                databaseReferenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshotUser) {
+                        arrayList.clear();
 
-                for (DataSnapshot snapshot : datasnapshot.getChildren()) {
-                    Recipe recipe = snapshot.getValue(Recipe.class);
+                        for (DataSnapshot snapshot : datasnapshot.getChildren()) {
+                            Recipe recipe = snapshot.getValue(Recipe.class);
 
-                    arrayList.add(recipe);
+                            for (DataSnapshot snapshot2 : snapshotUser.getChildren()) {
+                                IngredientUser ingredientUser = snapshot2.getValue(IngredientUser.class);
 
-                }
+                                if (recipe.getMainIngredient().contains(ingredientUser.getName())) {
 
-                setView();
+                                    arrayList.add(recipe);
+                                    break;
+                                }
 
+                            }
+
+                        }
+
+                        setView();
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Log.d("db error", error.toString());
+                        Toast.makeText(getApplicationContext(), "db 오류", Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.d("db error", error.toString());
-                Toast.makeText(getApplicationContext(), "db 오류", Toast.LENGTH_SHORT).show();
             }
-
         });
-
 
     }
 
