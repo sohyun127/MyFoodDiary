@@ -71,7 +71,7 @@ public class RecordAddActivity extends AppCompatActivity implements View.OnClick
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("record");
-        databaseReference.child(date).push().setValue(new Record(time,
+        databaseReference.child(date).child(binding.etRecordAddFood.getText().toString()).setValue(new Record(time,
                 binding.etRecordAddFood.getText().toString(),
                 binding.etRecordAddKcal.getText().toString(), sImage));
     }

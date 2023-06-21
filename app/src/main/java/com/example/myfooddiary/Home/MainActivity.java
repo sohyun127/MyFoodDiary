@@ -7,17 +7,20 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.myfooddiary.Home.Ingredient.IngredientFragment;
 import com.example.myfooddiary.Home.recipe.RecipeFragment;
+import com.example.myfooddiary.Home.record.RecordDetailsFragment;
 import com.example.myfooddiary.Home.record.RecordFragment;
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.ActivityMainBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.FirebaseApp;
 
-
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -62,6 +65,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return false;
             }
         });
+
+        if(getIntent().hasExtra("fragmentToLoad")){
+            String fragmentToLoad = getIntent().getStringExtra("fragmentToLoad");
+            if (fragmentToLoad.equals("recordFragment")) {
+                // RecordFragment 초기화 코드
+                long now = System.currentTimeMillis();
+                DateFormat formatter = new SimpleDateFormat("yyyy년M월d일");
+                Date date = new Date(now);
+                String getDay = formatter.format(date);
+                Bundle bundle = new Bundle();
+                bundle.putString("day", getDay);
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                Fragment fragment = new RecordDetailsFragment();
+                fragment.setArguments(bundle);
+                transaction.replace(R.id.fcv_main, fragment);
+                transaction.commit();
+            }
+        }
 
 
     }

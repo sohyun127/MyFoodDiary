@@ -70,6 +70,8 @@ public class RecordFragment extends Fragment {
             }
 
         });
+
+
     }
 
 

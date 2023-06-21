@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfooddiary.BuildConfig;
+import com.example.myfooddiary.Home.LoadingDialog;
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.ActivityIngredientOcrImageBinding;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -54,6 +55,7 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
+    private LoadingDialog loadingDialog;
 
     private static List<String> ingredientLabel;
     private static List<String> cow=List.of("살치","채끝","부채","안창","토시","치마","한우","안심","스테이크","차돌박이","양지","제비추리","소고기","등심");
@@ -67,6 +69,9 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
         super.onCreate(savedInstanceState);
         binding = ActivityIngredientOcrImageBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        loadingDialog = new LoadingDialog(this);
+        loadingDialog.show();
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference("ingredient_ocr");
@@ -113,6 +118,7 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
         if (imageData != null) {
             bitmap = BitmapFactory.decodeByteArray(imageData, 0, imageData.length);
             binding.ivIngredientOcrImage.setImageBitmap(bitmap);
+            loadingDialog.dismiss();
         }
 
     }
@@ -136,6 +142,7 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
     }
 
     private void callCloudVision(final Bitmap bitmap) {
+        loadingDialog.show();
 
         // Do the real work in an async task, because we need to use the network anyway
         try {
