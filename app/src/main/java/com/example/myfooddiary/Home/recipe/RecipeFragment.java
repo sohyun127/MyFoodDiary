@@ -57,6 +57,7 @@ public class RecipeFragment extends Fragment {
         super.onDestroyView();
     }
 
+    //화면 구성하기
     private void setAdapter() {
         loadingDialog = new LoadingDialog(getContext());
         loadingDialog.show();

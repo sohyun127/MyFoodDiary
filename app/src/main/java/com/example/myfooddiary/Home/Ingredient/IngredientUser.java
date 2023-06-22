@@ -1,5 +1,6 @@
 package com.example.myfooddiary.Home.Ingredient;
 
+//사용자가 가지고 있는 재료 data 클래스
 public class IngredientUser {
 
     private String count;

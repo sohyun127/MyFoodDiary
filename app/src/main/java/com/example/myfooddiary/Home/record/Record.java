@@ -1,5 +1,6 @@
 package com.example.myfooddiary.Home.record;
 
+//기록 data 클래스
 public class Record {
 
     private String time;

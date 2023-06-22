@@ -1,4 +1,4 @@
-package com.example.myfooddiary;
+package com.example.myfooddiary.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myfooddiary.Home.MainActivity;
-import com.example.myfooddiary.Home.User;
+import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.ActivitySigninBinding;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;

@@ -36,13 +36,13 @@
             android:name=".Home.Ingredient.IngredientOcrTextActivity"
             android:exported="false" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".auth.SignupActivity"
             android:exported="false" />
         <activity
             android:name=".Home.Ingredient.IngredientOcrCameraActivity"
             android:exported="false" />
         <activity
-            android:name=".SigninActivity"
+            android:name=".auth.SigninActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

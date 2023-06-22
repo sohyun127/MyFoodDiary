@@ -14,6 +14,7 @@ import com.example.myfooddiary.databinding.DialogIngredientBinding;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+//재료 상세정보 다이얼로그 구성
 public class IngredientDialog extends Dialog {
 
     private DialogIngredientBinding binding;

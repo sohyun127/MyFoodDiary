@@ -123,6 +123,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
         //화면 켜진 상태 유지
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        //사진 촬영 버튼
         FloatingActionButton fabOcrCamera = binding.fabOcrCamera;
         fabOcrCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,6 +201,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
 
     }
 
+    //카메라 프리뷰 함수
     public void initCameraAndPreview() {
 
         HandlerThread handlerThread = new HandlerThread("CAMERA2");
@@ -231,6 +233,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
         }
     }
 
+    //촬영된 사진 바이트 형태로 읽어주는 함수
     private ImageReader.OnImageAvailableListener mOnImageAvailableListener = new ImageReader.OnImageAvailableListener() {
         @Override
         public void onImageAvailable(ImageReader reader) {
@@ -258,6 +261,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
         }
     };
 
+    //촬영된 사진 회전 정도 확인하는 함수
     private CameraDevice.StateCallback deviceStateCallback = new CameraDevice.StateCallback() {
 
         @Override
@@ -328,6 +332,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
         }
     };
 
+    //사진 촬영 함수
     public void takePicture() {
         try {
             CaptureRequest.Builder captureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
@@ -364,6 +369,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
         }
     }
 
+    //갤러리에 저장될 땐 비트맵을 URI형태로 변경 후 저장
     public static final String insertImage(ContentResolver cr, Bitmap source, String title, String description) {
         ContentValues values = new ContentValues();
         values.put(MediaStore.Images.Media.TITLE, title);
@@ -401,6 +407,7 @@ public class IngredientOcrCameraActivity extends AppCompatActivity {
         return stringUrl;
     }
 
+    //갤러리에 촬영한 사진 저장 함수
     private class SaveImageTask extends AsyncTask<Bitmap, Void, Void> {
 
         @Override

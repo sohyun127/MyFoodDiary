@@ -1,5 +1,6 @@
 package com.example.myfooddiary.Home.Ingredient;
 
+//재료 정보 data 클래스
 public class Ingredient {
     private String name;
     private int typeId;

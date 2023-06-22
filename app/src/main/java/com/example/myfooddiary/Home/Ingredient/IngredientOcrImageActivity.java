@@ -141,6 +141,7 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
 
     }
 
+    //google cloud vision 호출
     private void callCloudVision(final Bitmap bitmap) {
         loadingDialog.show();
 
@@ -223,8 +224,8 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
 
                 for(int j =0;j<position.size();j++ ){
 
-                    if(annotation.getBoundingPoly().getVertices().get(0).getY()>Integer.valueOf(position.get(j))-20&&
-                            annotation.getBoundingPoly().getVertices().get(0).getY()<Integer.valueOf(position.get(j))+50){
+                    if(annotation.getBoundingPoly().getVertices().get(0).getY()>Integer.valueOf(position.get(j))-10&&
+                            annotation.getBoundingPoly().getVertices().get(0).getY()<Integer.valueOf(position.get(j))+10){
 
                         if(annotation.getBoundingPoly().getVertices().get(0).getX()>countPosition&&
                                 annotation.getBoundingPoly().getVertices().get(0).getX()<countPosition+40
@@ -248,23 +249,6 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
         return annotations;
 
     }
-
-    public static void addIngredient(String name, String count) {
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = database.getReference("ingredient_user");
-        databaseReference.child(name).setValue(new IngredientUser(name, count));
-
-    }
-
-    public static void addOcr(String name, String count){
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference databaseReference = database.getReference("ingredient_ocr");
-        databaseReference.child(name).setValue(new IngredientUser(name, count));
-
-    }
-
 
 
     private Vision.Images.Annotate prepareAnnotationRequest(Bitmap bitmap) throws IOException {
@@ -325,5 +309,24 @@ public class IngredientOcrImageActivity extends AppCompatActivity implements Vie
         Log.d(TAG, "created Cloud Vision request object, sending request");
         return annotateRequest;
     }
+
+
+    public static void addIngredient(String name, String count) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("ingredient_user");
+        databaseReference.child(name).setValue(new IngredientUser(name, count));
+
+    }
+
+    public static void addOcr(String name, String count){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = database.getReference("ingredient_ocr");
+        databaseReference.child(name).setValue(new IngredientUser(name, count));
+
+    }
+
+
 }
 
