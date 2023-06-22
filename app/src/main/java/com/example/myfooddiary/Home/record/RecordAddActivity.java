@@ -59,6 +59,7 @@ public class RecordAddActivity extends AppCompatActivity implements View.OnClick
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    //db에 식단 기록 저장
     private void addRecord(String date) {
         Drawable image = binding.ivRecordAdd.getDrawable();
         String sImage = "";
@@ -76,6 +77,7 @@ public class RecordAddActivity extends AppCompatActivity implements View.OnClick
                 binding.etRecordAddKcal.getText().toString(), sImage));
     }
 
+    //사진 불러오기
     private void getPhoto() {
         binding.ivRecordAdd.setOnClickListener(new View.OnClickListener() {
             @Override

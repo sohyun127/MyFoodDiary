@@ -1,4 +1,4 @@
-package com.example.myfooddiary;
+package com.example.myfooddiary.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import com.example.myfooddiary.Home.User;
+import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.ActivitySignupBinding;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DatabaseReference;
@@ -38,17 +38,18 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
-
+    //상단 툴바 클릭 이벤트 함수
     private void setClickEventOnToolBar() {
         Toolbar toolbar = binding.tbSignupToolBar;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    //클릭 이벤트 함수
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_signup_complete:
+            case R.id.btn_signup_complete: //회원가입 버튼
                 if(TextUtils.isEmpty(binding.etSignupId.getText().toString())||TextUtils.isEmpty(binding.etSignupPw.getText().toString())||TextUtils.isEmpty(binding.etSignupNickname.getText().toString())||
                         TextUtils.isEmpty(binding.etSignupHeight.getText().toString())||TextUtils.isEmpty(binding.etSignupWeight.getText().toString())){
                     Snackbar.make(binding.getRoot(), "회원가입에 실패했습니다.", Snackbar.LENGTH_SHORT).show();
@@ -71,6 +72,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
     }
 
+    //상단 툴바 뒤로가기 버튼
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -81,6 +83,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         return super.onOptionsItemSelected(item);
     }
 
+    //회원정보 db에 저장하는 함수
     public void saveData() {
         int height = Integer.parseInt(binding.etSignupHeight.getText().toString());
         int kcal = (int) ((height - 100) * 0.9 * 30);

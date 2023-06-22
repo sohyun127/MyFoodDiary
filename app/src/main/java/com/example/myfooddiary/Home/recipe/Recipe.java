@@ -1,5 +1,6 @@
 package com.example.myfooddiary.Home.recipe;
 
+//레시피 data 클래스
 public class Recipe {
 
     private String name;

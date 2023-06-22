@@ -45,7 +45,7 @@ public class IngredientOcrTextActivity extends AppCompatActivity implements View
 
     }
 
-
+    //인식된 텍스트 불러오기
     public void setData() {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference("ingredient_ocr");
@@ -88,6 +88,7 @@ public class IngredientOcrTextActivity extends AppCompatActivity implements View
         switch (v.getId()) {
             case R.id.btn_ingredient_ocr_text_complete:
                 Intent intent1 = new Intent(this, MainActivity.class);
+                intent1.putExtra("user_id",getIntent().getStringExtra("user_id"));
                 startActivity(intent1);
                 finish();
                 break;

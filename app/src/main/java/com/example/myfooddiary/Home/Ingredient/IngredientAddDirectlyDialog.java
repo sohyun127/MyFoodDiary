@@ -14,6 +14,7 @@ import com.example.myfooddiary.databinding.DialogIngredientAddDirectlyBinding;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+//재료 추가 시 다이얼로그 구성
 public class IngredientAddDirectlyDialog extends Dialog {
 
     protected Context mContext;

@@ -89,11 +89,13 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
         binding = null;
     }
 
+    //다이얼로그 설정
     private void setDialog(String name, String count){
         dialog= new IngredientDialog(getContext(),name,count);
         dialog.show();
     }
 
+    //화면 구성
     private void setAdapter(int typeId){
 
         loadingDialog = new LoadingDialog(getContext());
@@ -171,6 +173,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
     }
 
 
+    //카테고리 구성
     private void setTabLayout(){
         binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("종합"));
         binding.tabsIngredient.addTab(binding.tabsIngredient.newTab().setText("육류"));
@@ -242,7 +245,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
 
     }
 
-
+     //플로팅 버튼 애니메이션
     private void toggleFab() {
         if (fabMain_status) {
             ObjectAnimator fc_animation = ObjectAnimator.ofFloat(binding.fabIngredientAddDirectly, "translationY", 0f);
@@ -265,6 +268,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
         fabMain_status = !fabMain_status;
     }
 
+    //카메라 접근 퍼미션
     private boolean hasPermissions(String[] permissions) {
         int result;
 
@@ -291,6 +295,8 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
                         showDialogForPermission("앱을 실행하려면 퍼미션을 허가하셔야합니다");
                     else {
                         startActivity(new Intent(getActivity(), IngredientOcrCameraActivity.class));
+                        Intent intent = new Intent(getContext(),IngredientOcrTextActivity.class);
+                        intent.putExtra("user_id",getActivity().getIntent().getStringExtra("user_id"));
                         getActivity().finish();
                     }
                 }
@@ -300,6 +306,7 @@ public class IngredientFragment extends Fragment implements View.OnClickListener
 
     }
 
+    //퍼미션 다이얼로그로 출력하도록
     private void showDialogForPermission(String msg) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("알림");

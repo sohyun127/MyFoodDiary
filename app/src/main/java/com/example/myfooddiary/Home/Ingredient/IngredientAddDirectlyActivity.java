@@ -55,17 +55,20 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
         setEventOnSearchBar();
     }
 
+    //상단 툴바 클릭 이벤트
     private void setClickEventOnToolBar() {
         Toolbar toolbar = binding.tbIngredientAddDirectlyToolBar;
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    //재료 추가 시 수량 입력 다이얼로그
     private void setDialog(String name){
         dialog= new IngredientAddDirectlyDialog(this,name);
         dialog.show();
     }
 
+    //재료 검색 기능
     private void setEventOnSearchBar() {
 
         setAdapter();
@@ -105,7 +108,7 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
     }
 
 
-
+    //재료 검색 시 화면 재출력
     private void search(String charText) {
         fullList.clear();
 
@@ -122,6 +125,7 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    //화면 구성
     private void setAdapter() {
 
         loadingDialog = new LoadingDialog(this);
@@ -162,6 +166,7 @@ public class IngredientAddDirectlyActivity extends AppCompatActivity {
 
     }
 
+    //상단 툴바 뒤로가기 누를 시 이동
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {

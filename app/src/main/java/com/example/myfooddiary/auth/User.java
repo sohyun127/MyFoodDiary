@@ -1,5 +1,6 @@
-package com.example.myfooddiary.Home;
+package com.example.myfooddiary.auth;
 
+//회원 정보 data 클래스
 public class User {
 
     private String id;

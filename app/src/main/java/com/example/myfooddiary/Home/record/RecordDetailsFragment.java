@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myfooddiary.Home.LoadingDialog;
-import com.example.myfooddiary.Home.User;
+import com.example.myfooddiary.auth.User;
 import com.example.myfooddiary.R;
 import com.example.myfooddiary.databinding.FragmentRecordDetailsBinding;
 import com.google.firebase.database.DataSnapshot;
@@ -136,7 +136,7 @@ public class RecordDetailsFragment extends Fragment implements View.OnClickListe
     public void setInfo() {
         String userId = getActivity().getIntent().getStringExtra("user_id");
 
-        databaseReferenceUser = database.getReference("user_info").child(userId);
+        databaseReferenceUser = database.getReference("user_info").child("user_id");
         databaseReferenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot datasnapshot) {

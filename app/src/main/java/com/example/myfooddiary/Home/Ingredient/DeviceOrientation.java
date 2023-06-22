@@ -6,6 +6,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.media.ExifInterface;
 
+//카메라 촬영 시 회전 각도 확인용 클래스
 public class DeviceOrientation {
     private final int ORIENTATION_PORTRAIT = ExifInterface.ORIENTATION_ROTATE_90;
     private final int ORIENTATION_LANDSCAPE_REVERSE = ExifInterface.ORIENTATION_ROTATE_180;

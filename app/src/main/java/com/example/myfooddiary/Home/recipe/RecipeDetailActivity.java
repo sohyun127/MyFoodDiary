@@ -82,7 +82,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
         databaseReference.child(arrayList.get(position).getMainIngredient()).removeValue();
     }
 
-
+    //식단 자동으로 기록하기
     private void addRecord() {
         Drawable image = binding.ivRecipeDetail.getDrawable();
         String sImage = "";
@@ -107,6 +107,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
     }
 
 
+    //db에서 데이터 불러오기
     private void setData() {
         loadingDialog = new LoadingDialog(this);
         loadingDialog.show();
@@ -160,6 +161,7 @@ public class RecipeDetailActivity extends AppCompatActivity {
 
     }
 
+    //화면 구성하기
     private void setView() {
 
         int position = getIntent().getIntExtra("id", 0);
